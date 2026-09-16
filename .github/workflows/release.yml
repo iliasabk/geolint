@@ -77,12 +77,19 @@ jobs:
           curl -sL https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz | tar xz
 
       # Idempotent: a version already present in the registry is a success.
+      # The registry has no per-version lookup endpoint — check via the
+      # search API, which returns the server's published version list.
       - name: Publish to MCP registry
         run: |
           VER=$(node -p "require('./package.json').version")
           SERVER=$(node -p "require('./server.json').name")
-          API="https://registry.modelcontextprotocol.io/v0/servers/$(echo "$SERVER" | sed 's|/|%2F|g')/versions/$VER"
-          if curl -sf "$API" > /dev/null; then
+          published() {
+            curl -sf "https://registry.modelcontextprotocol.io/v0/servers?search=geolint" \
+              | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{
+                  const hit=(JSON.parse(s).servers??[]).some(x=>x.server?.name===process.argv[1]&&x.server?.version===process.argv[2]);
+                  process.exit(hit?0:1);})" "$SERVER" "$VER"
+          }
+          if published; then
             echo "$SERVER@$VER already in MCP registry — skipping."
             exit 0
           fi
@@ -90,7 +97,9 @@ jobs:
           if ./mcp-publisher publish; then
             exit 0
           fi
-          curl -sf "$API" > /dev/null && exit 0
+          # Publish can report a spurious "duplicate version" when the write
+          # succeeded but the response raced — verify before failing.
+          published && exit 0
           exit 1
 
       # Maintainer note: after cutting a release, float the major-version tag
