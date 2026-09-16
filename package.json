@@ -54,6 +54,7 @@
     "geolint": "tsx src/cli.ts",
     "version": "tsx scripts/sync-version.mjs && biome check --write package.json && git add package.json package-lock.json src/core/types.ts",
     "dogfood": "node scripts/dogfood.mjs",
+    "docs:bots": "tsx scripts/gen-bots-doc.ts",
     "showcase": "npm run build && node scripts/gen-showcase.mjs"
   },
   "dependencies": {

@@ -281,6 +281,10 @@ at all — they only set a preference — and geolint treats them accordingly.
   why each rule exists; the research sources are in
   [docs/research-notes.md](docs/research-notes.md), including the vendor docs
   behind every bot's robots.txt posture.
+- **The bot registry is a standalone reference.**
+  [docs/ai-crawlers.md](docs/ai-crawlers.md) lists every tracked token with
+  purpose, per-vendor robots.txt posture and vendor docs — the same data
+  `geolint bots` and the `list_ai_bots` MCP tool expose.
 
 ## Compared to the alternatives
 
