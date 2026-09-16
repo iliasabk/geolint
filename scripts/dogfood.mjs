@@ -10,6 +10,9 @@
  *   metrics/<slug>.svg            self-contained score badge
  *                                 (grey 'unreachable' when the scan failed)
  *   metrics/<slug>.endpoint.json  shields.io endpoint JSON for live badges
+ *   metrics/<slug>-trend.svg      sparkline of the site's score over time
+ *   metrics/history.json          rolling score history (last ~90 runs/site)
+ *   metrics/trends.svg            combined multi-site score chart
  *   metrics/README.md             index table — regenerated on every run
  *
  * Executed nightly by .github/workflows/dogfood.yml. Run it locally with:
@@ -165,6 +168,164 @@ function shieldsEndpointJson(score, grade) {
 }
 
 // ---------------------------------------------------------------------------
+// Trend charts — score-over-time SVGs generated from metrics/history.json.
+// Zero-dependency hand-rolled SVG, same approach as the badge helpers.
+// ---------------------------------------------------------------------------
+
+const HISTORY_PATH = join(METRICS_DIR, 'history.json');
+/** Keep roughly three months of nightly runs per site. */
+const HISTORY_LIMIT = 90;
+
+/** Per-site line colors for the combined chart (colorblind-safe-ish mix). */
+const TREND_PALETTE = [
+  '#1f6feb',
+  '#e05d44',
+  '#4c1',
+  '#a371f7',
+  '#39c5cf',
+  '#fe7d37',
+  '#f778ba',
+  '#dfb317',
+];
+
+const TREND_TEXT = '#8b949e';
+const TREND_GRID = '#30363d';
+const TREND_BG = '#0d1117';
+
+/**
+ * Load metrics/history.json, append today's scores and persist it again.
+ * Returns the updated `{ <slug>: [{ date, score }, …] }` map. Sites that
+ * failed this run keep their history unchanged — a missing point is more
+ * honest than a fake 0.
+ */
+async function updateHistory(results, runDate) {
+  /** @type {Record<string, {date: string, score: number}[]>} */
+  let history = {};
+  try {
+    const parsed = JSON.parse(await readFile(HISTORY_PATH, 'utf8'));
+    if (parsed && typeof parsed === 'object') {
+      history = parsed;
+    }
+  } catch {
+    // First run or corrupt file — start a fresh history.
+  }
+  for (const { site, report } of results) {
+    if (!report) {
+      continue;
+    }
+    const entries = (Array.isArray(history[site.slug]) ? history[site.slug] : []).filter(
+      (e) => e && typeof e.date === 'string' && typeof e.score === 'number',
+    );
+    history[site.slug] = [
+      ...entries.filter((e) => e.date !== runDate),
+      { date: runDate, score: Math.round(report.score) },
+    ].slice(-HISTORY_LIMIT);
+  }
+  await writeFile(HISTORY_PATH, `${JSON.stringify(history, null, 2)}\n`, 'utf8');
+  return history;
+}
+
+/** Map entries onto SVG x/y coordinates inside a padded plot box. */
+function trendPoints(entries, x0, y0, w, h) {
+  const n = entries.length;
+  return entries.map((e, i) => {
+    const x = x0 + (n === 1 ? w / 2 : (i / (n - 1)) * w);
+    const y = y0 + h - (Math.min(100, Math.max(0, e.score)) / 100) * h;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+}
+
+/**
+ * Per-site sparkline: a 168×32 polyline with the latest score at the end.
+ * Renders a single dot (not an empty image) when only one point exists.
+ */
+function sparklineSvg(label, entries) {
+  const w = 168;
+  const h = 32;
+  const pad = 4;
+  const title = `${escapeXml(label)} score over time`;
+  const parts = [
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" role="img" aria-label="${title}">`,
+    `<title>${title}</title>`,
+    `<rect width="${w}" height="${h}" rx="4" fill="${TREND_BG}"/>`,
+  ];
+  if (entries.length === 0) {
+    parts.push(
+      `<text x="${w / 2}" y="${h / 2 + 3}" text-anchor="middle" font-family="Verdana,Geneva,sans-serif" font-size="10" fill="${TREND_TEXT}">no data</text>`,
+    );
+  } else {
+    const pts = trendPoints(entries, pad, pad, w - pad * 2 - 34, h - pad * 2);
+    if (pts.length > 1) {
+      parts.push(
+        `<polyline points="${pts.join(' ')}" fill="none" stroke="${TREND_PALETTE[0]}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>`,
+      );
+    }
+    const [lx, ly] = pts[pts.length - 1].split(',');
+    parts.push(`<circle cx="${lx}" cy="${ly}" r="2" fill="${TREND_PALETTE[0]}"/>`);
+    parts.push(
+      `<text x="${w - pad}" y="${h / 2 + 4}" text-anchor="end" font-family="Verdana,Geneva,sans-serif" font-size="11" fill="${TREND_TEXT}">${entries[entries.length - 1].score}</text>`,
+    );
+  }
+  parts.push('</svg>');
+  return parts.join('');
+}
+
+/**
+ * Combined chart: every site's history on shared 0–100 axes (560×260),
+ * with a legend on the right. Written to metrics/trends.svg and embedded
+ * in metrics/README.md.
+ */
+function trendsSvg(sites, history) {
+  const w = 560;
+  const h = 260;
+  const x0 = 36;
+  const y0 = 12;
+  const pw = 380;
+  const ph = 224;
+  const parts = [
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" role="img" aria-label="geolint scores over time">`,
+    '<title>geolint scores over time</title>',
+    `<rect width="${w}" height="${h}" rx="6" fill="${TREND_BG}"/>`,
+  ];
+  for (const v of [0, 25, 50, 75, 100]) {
+    const y = (y0 + ph - (v / 100) * ph).toFixed(1);
+    parts.push(
+      `<line x1="${x0}" y1="${y}" x2="${x0 + pw}" y2="${y}" stroke="${TREND_GRID}" stroke-width="1"/>`,
+    );
+    parts.push(
+      `<text x="${x0 - 5}" y="${Number(y) + 3}" text-anchor="end" font-family="Verdana,Geneva,sans-serif" font-size="9" fill="${TREND_TEXT}">${v}</text>`,
+    );
+  }
+  let legendY = y0 + 8;
+  sites.forEach((site, i) => {
+    const entries = history[site.slug] ?? [];
+    const color = TREND_PALETTE[i % TREND_PALETTE.length];
+    if (entries.length === 1) {
+      const [cx, cy] = trendPoints(entries, x0, y0, pw, ph)[0].split(',');
+      parts.push(`<circle cx="${cx}" cy="${cy}" r="3" fill="${color}"/>`);
+    } else if (entries.length > 1) {
+      parts.push(
+        `<polyline points="${trendPoints(entries, x0, y0, pw, ph).join(' ')}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`,
+      );
+      const [lx, ly] = trendPoints(entries, x0, y0, pw, ph).pop().split(',');
+      parts.push(`<circle cx="${lx}" cy="${ly}" r="2.5" fill="${color}"/>`);
+    }
+    parts.push(
+      `<circle cx="${x0 + pw + 16}" cy="${legendY - 3}" r="3.5" fill="${color}"/>`,
+      `<text x="${x0 + pw + 26}" y="${legendY}" font-family="Verdana,Geneva,sans-serif" font-size="10" fill="${TREND_TEXT}">${escapeXml(site.label)}</text>`,
+    );
+    legendY += 18;
+  });
+  if (sites.every((s) => (history[s.slug] ?? []).length === 0)) {
+    parts.push(
+      `<text x="${x0 + pw / 2}" y="${y0 + ph / 2}" text-anchor="middle" font-family="Verdana,Geneva,sans-serif" font-size="11" fill="${TREND_TEXT}">no history yet</text>`,
+    );
+  }
+  parts.push('</svg>');
+  return parts.join('');
+}
+
+// ---------------------------------------------------------------------------
 // Scanning
 // ---------------------------------------------------------------------------
 
@@ -250,18 +411,21 @@ function mdInline(text) {
 /**
  * Regenerate metrics/README.md: a badge table of all sites, scored sites
  * first sorted by score desc, unreachable sites last (in SITES order).
+ * `history` is the updated metrics/history.json map — used for the trend
+ * sparkline column and the combined trends.svg chart above the table.
  */
-async function writeIndex(results, runDate) {
+async function writeIndex(results, runDate, history) {
   const sorted = [...results].sort((a, b) => (b.report?.score ?? -1) - (a.report?.score ?? -1));
   const version = sorted.find((r) => r.report)?.report?.tool?.version;
 
   const rows = [];
   for (const { site, report, error } of sorted) {
+    const trend = `<img src="${site.slug}-trend.svg" alt="${escapeXml(site.label)} score over time">`;
     if (!report) {
       const alt = `${DEFAULT_LABEL}: ${UNREACHABLE_MESSAGE}`;
       rows.push(
         `| [${site.label}](${site.url}) | <img src="${site.slug}.svg" alt="${alt}"> ` +
-          `${UNREACHABLE_MESSAGE} | — | — | — | ${runDate} |`,
+          `${UNREACHABLE_MESSAGE} | — | — | — | ${trend} | ${runDate} |`,
       );
       continue;
     }
@@ -270,7 +434,7 @@ async function writeIndex(results, runDate) {
     const alt = `${DEFAULT_LABEL}: ${badgeMessage(report.score, report.grade)}`;
     rows.push(
       `| [${site.label}](${site.url}) | <img src="${site.slug}.svg" alt="${alt}"> ` +
-        `${Math.round(report.score)}/100 | ${report.grade} | ${errors} | ${warnings} | ${date} |`,
+        `${Math.round(report.score)}/100 | ${report.grade} | ${errors} | ${warnings} | ${trend} | ${date} |`,
     );
   }
 
@@ -295,15 +459,18 @@ How it works and how to change the site list:
 
 Last run: **${runDate}** (UTC)${version ? ` · geolint v${version}` : ''}
 
-| Site | Score | Grade | Errors | Warnings | Last scan (UTC) |
-| ---- | ----- | ----- | -----: | -------: | --------------- |
+<img src="trends.svg" alt="geolint scores over time">
+
+| Site | Score | Grade | Errors | Warnings | Trend | Last scan (UTC) |
+| ---- | ----- | ----- | -----: | -------: | ----- | --------------- |
 ${rows.join('\n')}
 ${failureLines}
-Each site has three files: \`<slug>.json\` (the raw
+Each site has five files: \`<slug>.json\` (the raw
 \`geolint check -f json\` report, or an \`{ "error": "…" }\` object when the
-site was unreachable), \`<slug>.svg\` (the badge shown above) and
+site was unreachable), \`<slug>.svg\` (the badge shown above),
 \`<slug>.endpoint.json\` (a shields.io endpoint file for live external
-badges).
+badges), \`<slug>-trend.svg\` (the score sparkline) and the shared
+\`history.json\` (rolling score history, last ${HISTORY_LIMIT} runs per site).
 `;
 
   await writeFile(join(METRICS_DIR, 'README.md'), markdown, 'utf8');
@@ -383,13 +550,22 @@ async function main() {
     }
   }
 
-  await writeIndex(results, runDate);
+  const history = await updateHistory(results, runDate);
+  for (const site of SITES) {
+    await writeFile(
+      join(METRICS_DIR, `${site.slug}-trend.svg`),
+      `${sparklineSvg(site.label, history[site.slug] ?? [])}\n`,
+      'utf8',
+    );
+  }
+  await writeFile(join(METRICS_DIR, 'trends.svg'), `${trendsSvg(SITES, history)}\n`, 'utf8');
+  await writeIndex(results, runDate, history);
   await formatMetrics();
 
   const ok = results.filter((r) => r.report).length;
   console.log(
     `\nmetrics: ${ok}/${results.length} sites scanned · ` +
-      `wrote ${SITES.length * 3 + 1} files under metrics/`,
+      `wrote ${SITES.length * 4 + 3} files under metrics/`,
   );
   if (ok < results.length) {
     console.log('unreachable sites are listed in metrics/README.md — the run still succeeded');

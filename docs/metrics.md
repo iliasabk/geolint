@@ -18,7 +18,10 @@ schedule (daily ~05:17 UTC) and on manual dispatch:
    per site so a hanging site can never stall the workflow.
 3. From each JSON report it writes a self-contained score badge
    (`<slug>.svg`) and a shields.io endpoint file (`<slug>.endpoint.json`),
-   then regenerates `metrics/README.md` sorted by score.
+   appends the score to `metrics/history.json` (rolling, last 90 runs per
+   site) and renders a sparkline (`<slug>-trend.svg`) plus a combined
+   chart (`trends.svg`), then regenerates `metrics/README.md` sorted by
+   score.
 4. A plain `git` step commits `metrics/` — only when something changed —
    with `chore(metrics): nightly geolint scan [skip ci]` (the tag keeps the
    push from retriggering CI).
@@ -34,6 +37,9 @@ index — it never aborts the run.
 | `metrics/<slug>.json`         | Raw `geolint check -f json` report, or `{ "error": "…" }`.      |
 | `metrics/<slug>.svg`          | Self-contained score badge (no external service needed).       |
 | `metrics/<slug>.endpoint.json`| shields.io [endpoint schema](https://shields.io/endpoint) JSON.|
+| `metrics/<slug>-trend.svg`    | Score-over-time sparkline (rendered from `history.json`).      |
+| `metrics/history.json`        | Rolling score history — `{ <slug>: [{ date, score }] }`, last 90 runs per site. |
+| `metrics/trends.svg`          | Combined score-over-time chart for all sites.                  |
 | `metrics/README.md`           | Generated index — do not edit by hand.                         |
 
 ## Referencing the badges externally

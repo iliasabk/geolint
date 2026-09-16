@@ -5,12 +5,12 @@
   },
   "url": "https://github.com/",
   "finalUrl": "https://github.com/",
-  "scannedAt": "2026-09-16T09:56:28.195Z",
-  "durationMs": 1430,
+  "scannedAt": "2026-09-16T10:39:57.101Z",
+  "durationMs": 1299,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 52,
+    "timingMs": 132,
     "redirected": false
   },
   "robots": {
