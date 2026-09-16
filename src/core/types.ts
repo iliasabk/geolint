@@ -1,6 +1,6 @@
 import type { CheerioAPI } from 'cheerio';
 
-export const VERSION = '0.3.2';
+export const VERSION = '0.4.0';
 export const TOOL_NAME = 'geolint';
 
 export type Severity = 'error' | 'warn' | 'info';
