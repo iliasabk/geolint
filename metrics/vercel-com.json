@@ -5,12 +5,12 @@
   },
   "url": "https://vercel.com/",
   "finalUrl": "https://vercel.com/",
-  "scannedAt": "2026-09-15T10:04:00.752Z",
-  "durationMs": 1913,
+  "scannedAt": "2026-09-16T09:56:34.987Z",
+  "durationMs": 4531,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 184,
+    "timingMs": 92,
     "redirected": false
   },
   "robots": {
@@ -136,6 +136,7 @@
         "llms-txt/no-summary",
         "llms-txt/no-sections",
         "llms-txt/broken-links",
+        "llms-txt/links-blocked-by-robots",
         "llms-txt/llms-full-missing",
         "llms-txt/relative-links",
         "llms-txt/optional-not-last",
@@ -149,6 +150,7 @@
         "llms-txt/no-summary",
         "llms-txt/no-sections",
         "llms-txt/broken-links",
+        "llms-txt/links-blocked-by-robots",
         "llms-txt/llms-full-missing",
         "llms-txt/relative-links",
         "llms-txt/optional-not-last",

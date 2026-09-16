@@ -5,12 +5,12 @@
   },
   "url": "https://github.com/",
   "finalUrl": "https://github.com/",
-  "scannedAt": "2026-09-15T10:03:53.793Z",
-  "durationMs": 1104,
+  "scannedAt": "2026-09-16T09:56:28.195Z",
+  "durationMs": 1430,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 177,
+    "timingMs": 52,
     "redirected": false
   },
   "robots": {
@@ -52,11 +52,26 @@
     },
     {
       "severity": "warn",
-      "message": "2 of 5 sampled llms.txt links are broken",
+      "message": "1 of 5 sampled llms.txt links are broken",
       "detail": "Links in llms.txt should point to pages that actually load — broken entries undermine the whole file.",
       "fix": "Update or remove the dead links in /llms.txt.",
-      "evidence": "https://docs.github.com/api/article (HTTP 400)\nhttps://docs.github.com/api/article/body (HTTP 400)",
+      "evidence": "https://docs.github.com/api/article (HTTP 400)",
       "ruleId": "llms-txt/broken-links"
+    },
+    {
+      "severity": "warn",
+      "message": "1 llms.txt link(s) point to pages robots.txt disallows for AI bots",
+      "detail": "The file recommends these pages to AI consumers while robots.txt tells their crawlers to stay away — the contradiction makes the curated list useless for exactly the audience it was written for.",
+      "fix": "Allow the recommended paths for AI crawler tokens in robots.txt, or remove those links from llms.txt.",
+      "evidence": "https://github.com/github/github-mcp-server — blocked for Bytespider",
+      "ruleId": "llms-txt/links-blocked-by-robots"
+    },
+    {
+      "severity": "info",
+      "message": "No emerging AI manifest files found",
+      "detail": "Checked /agents.json, /ai.txt, /.well-known/ai-plugin.json — all absent. These conventions are early and entirely optional.",
+      "fix": "Prioritize /llms.txt; add agents.json or ai.txt only if they fit your AI distribution strategy.",
+      "ruleId": "llms-txt/ai-manifest"
     },
     {
       "severity": "warn",
@@ -124,8 +139,8 @@
       "ruleId": "technical/sitemap-missing"
     }
   ],
-  "score": 90,
-  "grade": "A",
+  "score": 88,
+  "grade": "B",
   "categories": {
     "ai-crawler": {
       "score": 81,
@@ -155,16 +170,17 @@
       ]
     },
     "llms-txt": {
-      "score": 94,
+      "score": 86,
       "errors": 0,
-      "warnings": 1,
-      "infos": 0,
+      "warnings": 2,
+      "infos": 1,
       "rulesRun": [
         "llms-txt/missing",
         "llms-txt/invalid-structure",
         "llms-txt/no-summary",
         "llms-txt/no-sections",
         "llms-txt/broken-links",
+        "llms-txt/links-blocked-by-robots",
         "llms-txt/llms-full-missing",
         "llms-txt/relative-links",
         "llms-txt/optional-not-last",
@@ -181,8 +197,7 @@
         "llms-txt/relative-links",
         "llms-txt/optional-not-last",
         "llms-txt/robots-directives",
-        "llms-txt/multiple-h1",
-        "llms-txt/ai-manifest"
+        "llms-txt/multiple-h1"
       ]
     },
     "schema": {

@@ -5,12 +5,12 @@
   },
   "url": "https://example.com/",
   "finalUrl": "https://example.com/",
-  "scannedAt": "2026-09-15T10:04:03.749Z",
-  "durationMs": 300,
+  "scannedAt": "2026-09-16T09:56:40.946Z",
+  "durationMs": 151,
   "page": {
     "status": 200,
     "contentType": "text/html",
-    "timingMs": 101,
+    "timingMs": 50,
     "redirected": false
   },
   "robots": {
@@ -196,6 +196,7 @@
         "llms-txt/no-summary",
         "llms-txt/no-sections",
         "llms-txt/broken-links",
+        "llms-txt/links-blocked-by-robots",
         "llms-txt/llms-full-missing",
         "llms-txt/relative-links",
         "llms-txt/optional-not-last",
@@ -208,6 +209,7 @@
         "llms-txt/no-summary",
         "llms-txt/no-sections",
         "llms-txt/broken-links",
+        "llms-txt/links-blocked-by-robots",
         "llms-txt/relative-links",
         "llms-txt/optional-not-last",
         "llms-txt/robots-directives",

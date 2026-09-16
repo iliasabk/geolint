@@ -5,12 +5,12 @@
   },
   "url": "https://openai.com/",
   "finalUrl": "https://openai.com/",
-  "scannedAt": "2026-09-15T10:03:56.571Z",
-  "durationMs": 1360,
+  "scannedAt": "2026-09-16T09:56:31.140Z",
+  "durationMs": 1027,
   "page": {
     "status": 403,
     "contentType": "text/html; charset=UTF-8",
-    "timingMs": 107,
+    "timingMs": 57,
     "redirected": false
   },
   "robots": {
@@ -202,6 +202,7 @@
         "llms-txt/no-summary",
         "llms-txt/no-sections",
         "llms-txt/broken-links",
+        "llms-txt/links-blocked-by-robots",
         "llms-txt/llms-full-missing",
         "llms-txt/relative-links",
         "llms-txt/optional-not-last",
@@ -214,6 +215,7 @@
         "llms-txt/no-summary",
         "llms-txt/no-sections",
         "llms-txt/broken-links",
+        "llms-txt/links-blocked-by-robots",
         "llms-txt/relative-links",
         "llms-txt/optional-not-last",
         "llms-txt/robots-directives",

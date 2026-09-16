@@ -5,12 +5,12 @@
   },
   "url": "https://www.anthropic.com/",
   "finalUrl": "https://www.anthropic.com/",
-  "scannedAt": "2026-09-15T10:03:55.098Z",
-  "durationMs": 1285,
+  "scannedAt": "2026-09-16T09:56:29.835Z",
+  "durationMs": 1115,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 140,
+    "timingMs": 79,
     "redirected": false
   },
   "robots": {
@@ -151,6 +151,7 @@
         "llms-txt/no-summary",
         "llms-txt/no-sections",
         "llms-txt/broken-links",
+        "llms-txt/links-blocked-by-robots",
         "llms-txt/llms-full-missing",
         "llms-txt/relative-links",
         "llms-txt/optional-not-last",
@@ -163,6 +164,7 @@
         "llms-txt/no-summary",
         "llms-txt/no-sections",
         "llms-txt/broken-links",
+        "llms-txt/links-blocked-by-robots",
         "llms-txt/relative-links",
         "llms-txt/optional-not-last",
         "llms-txt/robots-directives",
