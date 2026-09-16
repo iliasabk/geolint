@@ -9,6 +9,7 @@ import {
   type Finding,
   RULE_CATEGORIES,
   type RuleCategory,
+  type ScanStage,
   type Severity,
 } from '../core/types.js';
 import { allRules, ruleById } from '../rules/index.js';
@@ -27,6 +28,34 @@ const TEXT_FINDINGS = 5;
 export interface CallOpts {
   /** Wall-clock cap for the whole tool call. Default DEFAULT_CALL_TIMEOUT_MS. */
   callTimeoutMs?: number;
+  /**
+   * Progress sink for long-running calls (wired to notifications/progress
+   * when the client sends _meta.progressToken). Values are 0–100.
+   */
+  reportProgress?: (progress: number, total: number, message?: string) => void;
+}
+
+/** Stage → progress fraction for a single-page scan. */
+const SCAN_STAGE_PROGRESS: Record<ScanStage, number> = {
+  fetch: 10,
+  robots: 35,
+  'llms-txt': 55,
+  rules: 70,
+  done: 100,
+};
+
+/** Map scan stages onto [offset, offset+span] of a 0–100 progress bar. */
+function stageProgress(
+  report: NonNullable<CallOpts['reportProgress']> | undefined,
+  offset: number,
+  span: number,
+): ((stage: ScanStage) => void) | undefined {
+  if (!report) {
+    return undefined;
+  }
+  return (stage) => {
+    report(offset + (SCAN_STAGE_PROGRESS[stage] / 100) * span, 100, stage);
+  };
 }
 
 export interface AuditUrlArgs {
@@ -104,6 +133,7 @@ export async function auditUrlTool(
       categories: args.category,
       only: args.only,
       ignore: args.ignore,
+      onStage: stageProgress(opts.reportProgress, 0, 100),
     });
     const findings = report.findings
       .filter((f) => !f.internal)
@@ -167,6 +197,14 @@ export async function generateLlmsTxtTool(
       maxPages,
       timeout: args.timeout,
       status: noopStatus,
+      onPage: opts.reportProgress
+        ? (fetched) =>
+            opts.reportProgress!(
+              Math.min(95, (fetched / maxPages) * 95),
+              100,
+              `fetched ${fetched}/${maxPages} pages`,
+            )
+        : undefined,
     });
     const payload = { url: result.url, markdown: result.markdown, pageCount: result.pagesScanned };
     return { content: [{ type: 'text', text: result.markdown }], structuredContent: payload };
@@ -224,8 +262,14 @@ export async function compareUrlsTool(
   opts: CallOpts = {},
 ): Promise<CallToolResult> {
   const run = async (): Promise<CallToolResult> => {
-    const reportA = await scan(normalizeUrl(args.urlA), { timeout: args.timeout });
-    const reportB = await scan(normalizeUrl(args.urlB), { timeout: args.timeout });
+    const reportA = await scan(normalizeUrl(args.urlA), {
+      timeout: args.timeout,
+      onStage: stageProgress(opts.reportProgress, 0, 50),
+    });
+    const reportB = await scan(normalizeUrl(args.urlB), {
+      timeout: args.timeout,
+      onStage: stageProgress(opts.reportProgress, 50, 50),
+    });
     const diff = diffReports(reportA, reportB);
     const pick = (list: Finding[]) =>
       list

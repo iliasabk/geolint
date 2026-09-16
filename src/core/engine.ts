@@ -70,6 +70,7 @@ export function createScanner(options: ScanOptions = {}) {
       return fetchPage(u, resolved);
     };
 
+    options.onStage?.('fetch');
     let page: PageData | null;
     if (prefetched !== undefined) {
       page = prefetched;
@@ -82,9 +83,11 @@ export function createScanner(options: ScanOptions = {}) {
     }
     const origin = new URL(page?.finalUrl ?? url).origin;
 
+    options.onStage?.('robots');
     if (!robotsCache.has(origin)) {
       robotsCache.set(origin, await fetchRobots(origin, resolved));
     }
+    options.onStage?.('llms-txt');
     if (!llmsCache.has(origin)) {
       llmsCache.set(origin, await fetchLlmsTxt(origin, resolved));
     }
@@ -103,6 +106,7 @@ export function createScanner(options: ScanOptions = {}) {
     };
 
     const rules = selectRules(options);
+    options.onStage?.('rules');
     const settled = await Promise.all(
       rules.map(async (rule) => {
         try {
@@ -139,6 +143,7 @@ export function createScanner(options: ScanOptions = {}) {
           : robots.status < 500,
     }));
 
+    options.onStage?.('done');
     return {
       tool: { name: TOOL_NAME, version: VERSION },
       url,

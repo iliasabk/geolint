@@ -272,6 +272,75 @@ describe('compareUrlsTool', () => {
   });
 });
 
+describe('progress reporting', () => {
+  type ProgressCall = { progress: number; total: number; message?: string };
+  const collect = () => {
+    const calls: ProgressCall[] = [];
+    return {
+      calls,
+      sink: (progress: number, total: number, message?: string) => {
+        calls.push({ progress, total, message });
+      },
+    };
+  };
+
+  it('auditUrlTool reports fetch → robots → llms-txt → rules → done', async () => {
+    await withFixtureServer(HEALTHY_ROUTES, async (origin) => {
+      const { calls, sink } = collect();
+      const res = await auditUrlTool({ url: origin }, { reportProgress: sink });
+      expect(res.isError).toBeUndefined();
+      const stages = calls.map((c) => c.message);
+      expect(stages).toEqual(['fetch', 'robots', 'llms-txt', 'rules', 'done']);
+      const progresses = calls.map((c) => c.progress);
+      expect(progresses).toEqual([...progresses].sort((a, b) => a - b));
+      expect(progresses[0]).toBeGreaterThan(0);
+      expect(progresses[progresses.length - 1]).toBe(100);
+      for (const c of calls) {
+        expect(c.total).toBe(100);
+      }
+    });
+  });
+
+  it('generateLlmsTxtTool reports per-page crawl progress', async () => {
+    await withFixtureServer(
+      [
+        { path: '/', body: '<html><body><a href="/a">x</a></body></html>' },
+        { path: '/a', body: '<html><body>a</body></html>' },
+        { path: '/robots.txt', status: 404 },
+      ],
+      async (origin) => {
+        const { calls, sink } = collect();
+        const res = await generateLlmsTxtTool(
+          { url: origin, maxPages: 5 },
+          { reportProgress: sink },
+        );
+        expect(res.isError).toBeUndefined();
+        expect(calls.length).toBeGreaterThanOrEqual(2);
+        expect(calls.some((c) => /fetched \d+\/5 pages/.test(c.message ?? ''))).toBe(true);
+        for (const c of calls) {
+          expect(c.progress).toBeLessThanOrEqual(95);
+        }
+      },
+    );
+  });
+
+  it('compareUrlsTool maps the second scan onto the upper half', async () => {
+    await withFixtureServer(HEALTHY_ROUTES, async (origin) => {
+      const { calls, sink } = collect();
+      const res = await compareUrlsTool(
+        { urlA: origin, urlB: `${origin}/` },
+        { reportProgress: sink },
+      );
+      expect(res.isError).toBeUndefined();
+      expect(calls.length).toBe(10);
+      const mid = calls.findIndex((c) => c.progress > 50);
+      expect(mid).toBe(5);
+      expect(calls[4]?.progress).toBe(50);
+      expect(calls[calls.length - 1]?.progress).toBe(100);
+    });
+  });
+});
+
 describe('withTimeout', () => {
   it('rejects when the deadline beats the work', async () => {
     const slow = new Promise<string>((resolve) => setTimeout(() => resolve('late'), 5000));

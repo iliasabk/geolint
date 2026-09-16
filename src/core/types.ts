@@ -107,6 +107,9 @@ export interface LlmsTxtData {
   parsed: LlmsTxtParsed | null;
 }
 
+/** Coarse pipeline stages a scan moves through, in order. */
+export type ScanStage = 'fetch' | 'robots' | 'llms-txt' | 'rules' | 'done';
+
 export interface ScanOptions {
   /** Fetch timeout in ms. Default 15000. */
   timeout?: number;
@@ -120,6 +123,11 @@ export interface ScanOptions {
   categories?: RuleCategory[];
   /** Upper bound on auxiliary fetches a single scan may perform (sitemap etc.). Default 10. */
   maxExtraFetches?: number;
+  /**
+   * Called at the start of each pipeline stage — lets transports like the
+   * MCP server report scan progress without coupling to engine internals.
+   */
+  onStage?: (stage: ScanStage) => void;
 }
 
 export interface ResolvedScanOptions {

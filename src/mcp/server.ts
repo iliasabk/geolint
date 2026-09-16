@@ -1,4 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import type { RequestHandlerExtra } from '@modelcontextprotocol/sdk/shared/protocol.js';
+import type { ServerNotification, ServerRequest } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { RULE_CATEGORIES, TOOL_NAME, VERSION } from '../core/types.js';
 import {
@@ -96,6 +98,34 @@ const compareOutput = z.object({
   resolved: z.array(diffFindingSchema),
 });
 
+type ToolExtra = RequestHandlerExtra<ServerRequest, ServerNotification>;
+
+/**
+ * Build a `reportProgress` sink from the request's `_meta.progressToken`.
+ * Returns undefined when the client did not ask for progress — the tools
+ * then skip progress work entirely.
+ */
+function progressReporter(extra: ToolExtra): CallOpts['reportProgress'] | undefined {
+  const progressToken = extra._meta?.progressToken;
+  if (progressToken === undefined) {
+    return undefined;
+  }
+  return (progress, total, message) => {
+    void extra
+      .sendNotification({
+        method: 'notifications/progress',
+        params: { progressToken, progress, total, ...(message ? { message } : {}) },
+      })
+      .catch(() => {});
+  };
+}
+
+/** Merge per-request progress reporting into the shared CallOpts. */
+function withProgress(opts: CallOpts, extra: ToolExtra): CallOpts {
+  const reportProgress = progressReporter(extra);
+  return reportProgress ? { ...opts, reportProgress } : opts;
+}
+
 /**
  * Build the geolint MCP server: five read-only tools over the audit engine.
  * `callTimeoutMs` caps each tool call's wall-clock time (default 60 s).
@@ -123,7 +153,7 @@ export function createGeolintServer(opts: CallOpts = {}): McpServer {
       outputSchema: auditOutput,
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
-    (args) => auditUrlTool(args, opts),
+    (args, extra) => auditUrlTool(args, withProgress(opts, extra)),
   );
 
   server.registerTool(
@@ -143,7 +173,7 @@ export function createGeolintServer(opts: CallOpts = {}): McpServer {
       outputSchema: llmsTxtOutput,
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
-    (args) => generateLlmsTxtTool(args, opts),
+    (args, extra) => generateLlmsTxtTool(args, withProgress(opts, extra)),
   );
 
   server.registerTool(
@@ -183,7 +213,7 @@ export function createGeolintServer(opts: CallOpts = {}): McpServer {
       outputSchema: compareOutput,
       annotations: { readOnlyHint: true, openWorldHint: true },
     },
-    (args) => compareUrlsTool(args, opts),
+    (args, extra) => compareUrlsTool(args, withProgress(opts, extra)),
   );
 
   return server;

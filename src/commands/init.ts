@@ -10,6 +10,8 @@ export interface InitOptions {
   userAgent?: string;
   /** Status sink for progress lines (stderr). */
   status?: (msg: string) => void;
+  /** Called after each fetched page — used for MCP progress reporting. */
+  onPage?: (fetched: number) => void;
 }
 
 export interface InitResult {
@@ -93,6 +95,7 @@ export async function runInit(input: string, opts: InitOptions = {}): Promise<In
     maxPages,
     timeout: opts.timeout,
     userAgent: opts.userAgent,
+    onPage: opts.onPage ? (_page, fetched) => opts.onPage!(fetched) : undefined,
   });
   const infos = pages.flatMap((p) => (p.page ? [pageInfo(p.url, p.page)] : []));
   const markdown = buildLlmsTxt(url, infos);
