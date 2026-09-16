@@ -36,10 +36,10 @@ geolint ruft die Seite, deren `robots.txt` und `llms.txt` ab, gleicht **51 bekan
 | Kategorie | Regeln | Beispiele |
 | --- | ---: | --- |
 | KI-Crawler-Zugriff | 10 | `ai-crawler/search-bots-blocked`, `ai-crawler/wildcard-block-all`, `ai-crawler/user-fetch-bypass`, `ai-crawler/stale-tokens` |
-| llms.txt | 10 | `llms-txt/missing`, `llms-txt/invalid-structure`, `llms-txt/broken-links`, `llms-txt/relative-links` |
-| Strukturierte Daten | 6 | `schema/no-jsonld`, `schema/invalid-jsonld`, `schema/missing-article-fields` |
-| Zitierfähigkeit | 9 | `content/thin-content`, `content/no-h1`, `content/missing-dates`, `content/no-question-headings` |
-| Technische Grundlagen | 10 | `technical/client-rendered`, `technical/https`, `technical/slow-response`, `technical/sitemap-missing` |
+| llms.txt | 12 | `llms-txt/missing`, `llms-txt/invalid-structure`, `llms-txt/broken-links`, `llms-txt/relative-links` |
+| Strukturierte Daten | 7 | `schema/no-jsonld`, `schema/invalid-jsonld`, `schema/missing-article-fields` |
+| Zitierfähigkeit | 12 | `content/thin-content`, `content/no-h1`, `content/missing-dates`, `content/no-question-headings` |
+| Technische Grundlagen | 11 | `technical/client-rendered`, `technical/https`, `technical/slow-response`, `technical/sitemap-missing` |
 
 ## Ausführung in CI/CD
 

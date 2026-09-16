@@ -39,10 +39,10 @@ y genera un informe puntuado con una corrección concreta para cada hallazgo.
 | Categoría | Reglas | Ejemplos |
 | --- | ---: | --- |
 | Acceso de crawlers de IA | 10 | `ai-crawler/search-bots-blocked`, `ai-crawler/wildcard-block-all`, `ai-crawler/user-fetch-bypass`, `ai-crawler/stale-tokens` |
-| llms.txt | 10 | `llms-txt/missing`, `llms-txt/invalid-structure`, `llms-txt/broken-links`, `llms-txt/relative-links` |
-| Datos estructurados | 6 | `schema/no-jsonld`, `schema/invalid-jsonld`, `schema/missing-article-fields` |
-| Citabilidad | 9 | `content/thin-content`, `content/no-h1`, `content/missing-dates`, `content/no-question-headings` |
-| Fundamentos técnicos | 10 | `technical/client-rendered`, `technical/https`, `technical/slow-response`, `technical/sitemap-missing` |
+| llms.txt | 12 | `llms-txt/missing`, `llms-txt/invalid-structure`, `llms-txt/broken-links`, `llms-txt/relative-links` |
+| Datos estructurados | 7 | `schema/no-jsonld`, `schema/invalid-jsonld`, `schema/missing-article-fields` |
+| Citabilidad | 12 | `content/thin-content`, `content/no-h1`, `content/missing-dates`, `content/no-question-headings` |
+| Fundamentos técnicos | 11 | `technical/client-rendered`, `technical/https`, `technical/slow-response`, `technical/sitemap-missing` |
 
 ## Ejecución en CI/CD
 

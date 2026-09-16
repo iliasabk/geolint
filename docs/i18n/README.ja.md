@@ -38,10 +38,10 @@ geolintはページ、`robots.txt`、`llms.txt`を取得し、**51個の既知�
 | カテゴリ | ルール数 | 例 |
 | --- | ---: | --- |
 | AIクローラーアクセス | 10 | `ai-crawler/search-bots-blocked`、`ai-crawler/wildcard-block-all`、`ai-crawler/user-fetch-bypass`、`ai-crawler/stale-tokens` |
-| llms.txt | 10 | `llms-txt/missing`、`llms-txt/invalid-structure`、`llms-txt/broken-links`、`llms-txt/relative-links` |
-| 構造化データ | 6 | `schema/no-jsonld`、`schema/invalid-jsonld`、`schema/missing-article-fields` |
-| 引用されやすさ | 9 | `content/thin-content`、`content/no-h1`、`content/missing-dates`、`content/no-question-headings` |
-| 技術的基盤 | 10 | `technical/client-rendered`、`technical/https`、`technical/slow-response`、`technical/sitemap-missing` |
+| llms.txt | 12 | `llms-txt/missing`、`llms-txt/invalid-structure`、`llms-txt/broken-links`、`llms-txt/relative-links` |
+| 構造化データ | 7 | `schema/no-jsonld`、`schema/invalid-jsonld`、`schema/missing-article-fields` |
+| 引用されやすさ | 12 | `content/thin-content`、`content/no-h1`、`content/missing-dates`、`content/no-question-headings` |
+| 技術的基盤 | 11 | `technical/client-rendered`、`technical/https`、`technical/slow-response`、`technical/sitemap-missing` |
 
 ## CI/CDでの実行
 

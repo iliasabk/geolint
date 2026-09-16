@@ -62,10 +62,10 @@ and how to fix violations.
 | Category | Rules | Examples |
 | --- | ---: | --- |
 | AI Crawler Access | 10 | `ai-crawler/search-bots-blocked`, `ai-crawler/wildcard-block-all`, `ai-crawler/user-fetch-bypass`, `ai-crawler/stale-tokens` |
-| llms.txt | 10 | `llms-txt/missing`, `llms-txt/invalid-structure`, `llms-txt/broken-links`, `llms-txt/relative-links` |
-| Structured Data | 6 | `schema/no-jsonld`, `schema/invalid-jsonld`, `schema/missing-article-fields` |
-| Citability | 9 | `content/thin-content`, `content/no-h1`, `content/missing-dates`, `content/no-question-headings` |
-| Technical Foundation | 10 | `technical/client-rendered`, `technical/https`, `technical/slow-response`, `technical/sitemap-missing` |
+| llms.txt | 12 | `llms-txt/missing`, `llms-txt/invalid-structure`, `llms-txt/broken-links`, `llms-txt/relative-links` |
+| Structured Data | 7 | `schema/no-jsonld`, `schema/invalid-jsonld`, `schema/missing-article-fields` |
+| Citability | 12 | `content/thin-content`, `content/no-h1`, `content/missing-dates`, `content/no-question-headings` |
+| Technical Foundation | 11 | `technical/client-rendered`, `technical/https`, `technical/slow-response`, `technical/sitemap-missing` |
 
 ## What a report looks like
 
