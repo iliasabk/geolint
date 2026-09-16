@@ -53,6 +53,14 @@ const SITES = [
   { slug: 'wikipedia', url: 'https://wikipedia.org', label: 'Wikipedia' },
   { slug: 'stackoverflow', url: 'https://stackoverflow.com', label: 'Stack Overflow' },
   { slug: 'hackernews', url: 'https://news.ycombinator.com', label: 'Hacker News' },
+  { slug: 'huggingface', url: 'https://huggingface.co', label: 'Hugging Face' },
+  { slug: 'mozilla', url: 'https://mozilla.org', label: 'Mozilla' },
+  { slug: 'wordpress', url: 'https://wordpress.org', label: 'WordPress' },
+  { slug: 'shopify', url: 'https://shopify.com', label: 'Shopify' },
+  { slug: 'netlify', url: 'https://netlify.com', label: 'Netlify' },
+  { slug: 'kagi', url: 'https://kagi.com', label: 'Kagi' },
+  { slug: 'duckduckgo', url: 'https://duckduckgo.com', label: 'DuckDuckGo' },
+  { slug: 'react', url: 'https://react.dev', label: 'React' },
 ];
 
 /** Grade → hex, same palette as src/core/badge.ts (GRADE_HEX_COLOR). */
