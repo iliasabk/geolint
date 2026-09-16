@@ -21,7 +21,7 @@ Keine Installation, keine Konfiguration erforderlich:
 npx @iliasabk/geolint check yoursite.com
 ```
 
-geolint ruft die Seite, deren `robots.txt` und `llms.txt` ab, gleicht **51 bekannte KI-Crawler-Tokens** mit deiner `robots.txt` ab, führt **51 Audit-Regeln** aus und gibt einen bewerteten Bericht mit konkreten Lösungsvorschlägen für jeden Befund aus.
+geolint ruft die Seite, deren `robots.txt` und `llms.txt` ab, gleicht **51 bekannte KI-Crawler-Tokens** mit deiner `robots.txt` ab, führt **52 Audit-Regeln** aus und gibt einen bewerteten Bericht mit konkreten Lösungsvorschlägen für jeden Befund aus.
 
 ## Warum geolint?
 
@@ -31,7 +31,7 @@ geolint ruft die Seite, deren `robots.txt` und `llms.txt` ab, gleicht **51 bekan
 
 ## Was wird geprüft?
 
-51 Regeln in 5 Kategorien — `geolint rules` listet alle Regeln auf, und [docs/rules.md](../rules.md) dokumentiert die genaue Prüfung, Relevanz und Behebung jedes Regelverstoßes:
+52 Regeln in 5 Kategorien — `geolint rules` listet alle Regeln auf, und [docs/rules.md](../rules.md) dokumentiert die genaue Prüfung, Relevanz und Behebung jedes Regelverstoßes:
 
 | Kategorie | Regeln | Beispiele |
 | --- | ---: | --- |
