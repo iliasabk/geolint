@@ -1,0 +1,11 @@
+# Smithery.ai configuration — https://smithery.ai/docs/config
+runtime: container
+build:
+  dockerfile: Dockerfile
+  dockerBuildPath: .
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties: {}
+  exampleConfig: {}
