@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- `llms-txt/links-blocked-by-robots` — warns when llms.txt recommends pages
+  that robots.txt disallows for AI answer/fetch bots (#2).
+- Score-over-time trends in the dogfood metrics: `metrics/history.json`
+  (rolling 90-run history), per-site sparklines and a combined `trends.svg`
+  chart in the index (#3).
+- Per-page drill-down in `crawl -f html` site reports — every page expands
+  into its own mini report (score ring, fetch meta, findings) (#5).
+- MCP progress reporting: `audit_url`, `compare_urls` and
+  `generate_llms_txt` emit `notifications/progress` when the client sends
+  `_meta.progressToken` (#6).
+
+
 ## [0.3.2] - 2026-09-15
 
 ### Added
@@ -12,12 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   auto-publish to registry.modelcontextprotocol.io via GitHub OIDC.
 - CI test matrix covers macOS and Windows in addition to Ubuntu (#4).
 - Showcase serves the repo `llms.txt` at the site root.
-
-## [Unreleased]
-
-### Added
-- `llms-txt/links-blocked-by-robots` — warns when llms.txt recommends pages
-  that robots.txt disallows for AI answer/fetch bots (#2).
 
 ## [0.3.0] - 2026-09-14
 
