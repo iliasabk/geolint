@@ -481,18 +481,48 @@ function topIssue(t: SevTotals): string {
   return '<span class="ok">✓ clean</span>';
 }
 
-function pagesSection(site: SiteReport): string {
+/** Compact score ring for per-page drill-downs (same math as the hero ring). */
+function miniRing(score: number, grade: Grade): string {
+  const s = clampScore(score);
+  const color = GRADE_COLOR[grade] ?? '#8b949e';
+  return `<div class="ring-sm" role="img" aria-label="Score ${s} out of 100, grade ${esc(grade)}">
+<svg viewBox="0 0 56 56" width="56" height="56" aria-hidden="true"><circle class="rb" cx="28" cy="28" r="23"/><circle class="rf-sm" cx="28" cy="28" r="23" style="--p:${s};stroke:${color}" transform="rotate(-90 28 28)"/></svg>
+<div class="ring-sm-num"><strong>${s}</strong></div>
+</div>`;
+}
+
+/**
+ * One collapsible <details> per crawled page: summary row (path, score,
+ * grade, top issue) expands into that page's own mini report — ring, fetch
+ * meta and its findings rendered through the same findingCard component.
+ */
+function pageDrillDown(p: ScanReport, opts: RenderOptions): string {
+  const url = p.finalUrl || p.url;
+  const t = severityTotals(p.findings);
+  const chips: string[] = [extLink(url, 'open page ↗')];
+  if (p.page) {
+    chips.push(esc(`HTTP ${p.page.status}`));
+    chips.push(esc(`TTFB ${durationLabel(p.page.timingMs)}`));
+  }
+  const visible = p.findings.filter((f) => f.severity !== 'info' || opts.verbose === true);
+  const hidden = p.findings.length - visible.length;
+  const body =
+    visible.length === 0
+      ? `<div class="page-clean">✓ no findings${hidden > 0 ? ` — ${plural(hidden, 'hint')} hidden (re-run with --verbose)` : ''}</div>`
+      : visible.map((f) => findingCard({ finding: f, pages: 1 })).join('');
+  return `<details class="pg"><summary><span class="p-path">${esc(pagePath(url))}</span><span class="p-score" style="color:${scoreColor(clampScore(p.score))}">${clampScore(p.score)}</span><span class="gc" style="background:${GRADE_COLOR[p.grade] ?? '#8b949e'}">${esc(p.grade)}</span><span class="p-issue">${topIssue(t)}</span></summary>
+<div class="page-body"><div class="page-side">${miniRing(p.score, p.grade)}<div class="page-meta">${metaChips(chips)}</div></div>
+<div class="page-findings">${body}</div></div></details>`;
+}
+
+function pagesSection(site: SiteReport, opts: RenderOptions): string {
   const sorted = [...site.pages].sort(
     (a, b) =>
       a.score - b.score || severityTotals(b.findings).errors - severityTotals(a.findings).errors,
   );
-  const rows = sorted.map((p) => {
-    const path = pagePath(p.finalUrl || p.url);
-    const t = severityTotals(p.findings);
-    return `<tr><td class="p-path">${extLink(p.finalUrl || p.url, path)}</td><td class="p-score" style="color:${scoreColor(clampScore(p.score))}">${clampScore(p.score)}</td><td><span class="gc" style="background:${GRADE_COLOR[p.grade] ?? '#8b949e'}">${esc(p.grade)}</span></td><td>${topIssue(t)}</td></tr>`;
-  });
-  return `<section class="sec"><h2>Pages <span class="h2-sub">worst first · click a row to open the page</span></h2>
-<div class="tablewrap"><table class="pages"><thead><tr><th>Page</th><th>Score</th><th>Grade</th><th>Top issue</th></tr></thead><tbody>${rows.join('')}</tbody></table></div></section>`;
+  const rows = sorted.map((p) => pageDrillDown(p, opts)).join('');
+  return `<section class="sec"><h2>Pages <span class="h2-sub">worst first · expand a row for that page's own report</span></h2>
+<div class="pglist">${rows}</div></section>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -605,6 +635,26 @@ tr.ret td{opacity:.45}
 .unk{color:var(--muted)}
 .wn{color:var(--warn)}
 .in{color:var(--info)}
+.pglist{display:flex;flex-direction:column;gap:8px}
+.pg{border:1px solid var(--border);border-radius:10px;background:var(--panel)}
+.pg>summary{cursor:pointer;list-style:none;padding:9px 14px;display:flex;align-items:center;gap:12px;font-size:13.5px;user-select:none}
+.pg>summary::-webkit-details-marker{display:none}
+.pg>summary::after{content:'\\25B8';margin-left:auto;color:var(--muted);transition:transform .15s;flex:none}
+.pg[open]>summary{border-bottom:1px solid var(--border)}
+.pg[open]>summary::after{transform:rotate(90deg)}
+.pg .p-path{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pg .p-issue{white-space:nowrap}
+.page-body{padding:14px}
+.page-side{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.page-meta{display:flex;flex-wrap:wrap;gap:4px}
+.page-meta .chip a{color:var(--info)}
+.page-findings .finding{margin-bottom:8px}
+.page-clean{color:var(--ok);font-size:13.5px}
+.ring-sm{position:relative;width:56px;height:56px;flex:none}
+.rf-sm{fill:none;stroke-width:6;stroke-linecap:round;stroke-dasharray:144.51px;stroke-dashoffset:calc(144.51px*(1 - var(--p)/100));animation:ringin .9s cubic-bezier(.25,.7,.3,1)}
+.ring-sm .rb{stroke-width:6}
+.ring-sm-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.ring-sm-num strong{font-size:16px;line-height:1}
 .p-path{word-break:break-all}
 .p-score{font-weight:700}
 .gc{display:inline-block;min-width:21px;text-align:center;border-radius:5px;color:#0d1117;font-weight:800;font-size:12px;padding:1px 6px}
@@ -622,7 +672,7 @@ tr.ret td{opacity:.45}
 }
 @media print{
 body{background:#fff;color:#111}
-.card,.hero,.sg,.tablewrap,.clean,.fix,.evidence{background:#fff;border-color:#ccc}
+.card,.hero,.sg,.pg,.tablewrap,.clean,.fix,.evidence{background:#fff;border-color:#ccc}
 .chip,.cnt,.rule-id,.cat-tag,.mini,.passed-ids code{background:#fff;border-color:#ccc;color:#444}
 .fsearch,.passed{display:none}
 .brand{background:none;-webkit-text-fill-color:#111;color:#111}
@@ -710,7 +760,7 @@ export function renderHtmlReport(report: ScanReport, opts: RenderOptions = {}): 
 export function renderHtmlSiteReport(site: SiteReport, opts: RenderOptions = {}): string {
   const body = [
     hero(site.score, site.grade, site.findings, site.categories),
-    site.pages.length > 0 ? pagesSection(site) : '',
+    site.pages.length > 0 ? pagesSection(site, opts) : '',
     categoriesSection(site.categories),
     findingsSection(site.findings, opts, true),
     passedBlock(site.categories, opts),

@@ -216,9 +216,19 @@ describe('html — SiteReport', () => {
 
   it('dedupes identical findings with a ×N pages chip', () => {
     expect(out).toContain('×2 pages');
-    const occurrences = out.split('No llms.txt found').length - 1;
+    const aggregate = out.slice(out.indexOf('>Findings<'));
+    const occurrences = aggregate.split('No llms.txt found').length - 1;
     expect(occurrences).toBe(1);
     expect(out).toContain('Identical &lt;title&gt; across multiple pages');
+  });
+
+  it('renders each page as an expandable drill-down with its own findings', () => {
+    expect(out).toContain('<details class="pg">');
+    expect(out).toContain('expand a row');
+    const pgCount = out.split('<details class="pg">').length - 1;
+    expect(pgCount).toBe(3);
+    expect(out).toContain('open page ↗');
+    expect(out).toContain('ring-sm');
   });
 
   it('renders aggregate score, categories and footer', () => {
