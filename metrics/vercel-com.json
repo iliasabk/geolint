@@ -1,16 +1,16 @@
 {
   "tool": {
     "name": "geolint",
-    "version": "0.3.2"
+    "version": "0.4.0"
   },
   "url": "https://vercel.com/",
   "finalUrl": "https://vercel.com/",
-  "scannedAt": "2026-09-16T10:40:08.162Z",
-  "durationMs": 3255,
+  "scannedAt": "2026-09-17T09:58:37.919Z",
+  "durationMs": 2971,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 162,
+    "timingMs": 69,
     "redirected": false
   },
   "robots": {

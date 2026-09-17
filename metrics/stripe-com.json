@@ -1,17 +1,17 @@
 {
   "tool": {
     "name": "geolint",
-    "version": "0.3.2"
+    "version": "0.4.0"
   },
   "url": "https://stripe.com/",
-  "finalUrl": "https://stripe.com/en-de",
-  "scannedAt": "2026-09-16T10:40:03.514Z",
-  "durationMs": 4346,
+  "finalUrl": "https://stripe.com/",
+  "scannedAt": "2026-09-17T09:58:36.253Z",
+  "durationMs": 1468,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 704,
-    "redirected": true
+    "timingMs": 68,
+    "redirected": false
   },
   "robots": {
     "url": "https://stripe.com/robots.txt",
@@ -23,7 +23,7 @@
     "url": "https://stripe.com/llms.txt",
     "status": 200,
     "title": "Stripe",
-    "linkCount": 288
+    "linkCount": 308
   },
   "findings": [
     {
@@ -71,7 +71,7 @@
     },
     {
       "severity": "info",
-      "message": "27 of 31 images have no alt text",
+      "message": "31 of 35 images have no alt text",
       "detail": "Alt text is the primary way AI systems understand what an image shows; missing alt makes visual content uncitable.",
       "fix": "Write descriptive alt text for meaningful images (purely decorative ones can keep alt=\"\").",
       "ruleId": "content/images-no-alt"
@@ -82,14 +82,6 @@
       "detail": "Whatever sits under the H1 — image, list, navigation — is what engines read first; a declarative lead paragraph is the easiest span to cite.",
       "fix": "Open the article with a 2–4 sentence paragraph that directly answers the question the H1 poses.",
       "ruleId": "content/answer-first"
-    },
-    {
-      "severity": "info",
-      "message": "The URL redirected to a different final URL",
-      "detail": "Requested https://stripe.com/, ended at https://stripe.com/en-de.",
-      "fix": "Make sure redirects are intentional, single-hop and point at the canonical destination.",
-      "evidence": "https://stripe.com/ → https://stripe.com/en-de",
-      "ruleId": "technical/redirect"
     }
   ],
   "score": 96,
@@ -210,10 +202,10 @@
       ]
     },
     "technical": {
-      "score": 98,
+      "score": 100,
       "errors": 0,
       "warnings": 0,
-      "infos": 1,
+      "infos": 0,
       "rulesRun": [
         "technical/page-unreachable",
         "technical/http-error",
@@ -236,6 +228,7 @@
         "technical/title-missing",
         "technical/meta-description",
         "technical/slow-response",
+        "technical/redirect",
         "technical/https",
         "technical/sitemap-quality"
       ]

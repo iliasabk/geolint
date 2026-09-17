@@ -1,16 +1,16 @@
 {
   "tool": {
     "name": "geolint",
-    "version": "0.3.2"
+    "version": "0.4.0"
   },
   "url": "https://www.anthropic.com/",
   "finalUrl": "https://www.anthropic.com/",
-  "scannedAt": "2026-09-16T10:39:58.876Z",
-  "durationMs": 1639,
+  "scannedAt": "2026-09-17T09:58:33.930Z",
+  "durationMs": 897,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 295,
+    "timingMs": 105,
     "redirected": false
   },
   "robots": {
@@ -72,10 +72,10 @@
     },
     {
       "severity": "warn",
-      "message": "Thin content — only ~133 words of visible text",
+      "message": "Thin content — only ~151 words of visible text",
       "detail": "Pages with very little extractable text give AI engines nothing to quote; they also correlate with client-rendered shells.",
       "fix": "Expand the page with substantive, answerable content — explanations, specifics, Q&A.",
-      "evidence": "133 words",
+      "evidence": "151 words",
       "ruleId": "content/thin-content"
     },
     {
