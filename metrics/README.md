@@ -9,20 +9,20 @@ living showcase of AI-search readiness scores. Pipeline:
 How it works and how to change the site list:
 [docs/metrics.md](../docs/metrics.md).
 
-Last run: **2026-09-18** (UTC) · geolint v0.4.0
+Last run: **2026-09-19** (UTC) · geolint v0.4.0
 
 <img src="trends.svg" alt="geolint scores over time">
 
 | Site | Score | Grade | Errors | Warnings | Trend | Last scan (UTC) |
 | ---- | ----- | ----- | -----: | -------: | ----- | --------------- |
-| [stripe.com](https://stripe.com) | <img src="stripe-com.svg" alt="geolint: 96/100 · A"> 96/100 | A | 0 | 1 | <img src="stripe-com-trend.svg" alt="stripe.com score over time"> | 2026-09-18 |
-| [vercel.com](https://vercel.com) | <img src="vercel-com.svg" alt="geolint: 95/100 · A"> 95/100 | A | 0 | 2 | <img src="vercel-com-trend.svg" alt="vercel.com score over time"> | 2026-09-18 |
-| [anthropic.com](https://www.anthropic.com) | <img src="anthropic-com.svg" alt="geolint: 92/100 · A"> 92/100 | A | 0 | 4 | <img src="anthropic-com-trend.svg" alt="anthropic.com score over time"> | 2026-09-18 |
-| [news.ycombinator.com](https://news.ycombinator.com) | <img src="news-ycombinator-com.svg" alt="geolint: 90/100 · A"> 90/100 | A | 0 | 5 | <img src="news-ycombinator-com-trend.svg" alt="news.ycombinator.com score over time"> | 2026-09-18 |
-| [github.com](https://github.com) | <img src="github-com.svg" alt="geolint: 89/100 · B"> 89/100 | B | 1 | 4 | <img src="github-com-trend.svg" alt="github.com score over time"> | 2026-09-18 |
-| [example.com](https://example.com) | <img src="example-com.svg" alt="geolint: 86/100 · B"> 86/100 | B | 1 | 6 | <img src="example-com-trend.svg" alt="example.com score over time"> | 2026-09-18 |
-| [openai.com](https://openai.com) | <img src="openai-com.svg" alt="geolint: 83/100 · B"> 83/100 | B | 2 | 6 | <img src="openai-com-trend.svg" alt="openai.com score over time"> | 2026-09-18 |
-| [perplexity.ai](https://www.perplexity.ai) | <img src="perplexity-ai.svg" alt="geolint: 81/100 · B"> 81/100 | B | 3 | 5 | <img src="perplexity-ai-trend.svg" alt="perplexity.ai score over time"> | 2026-09-18 |
+| [stripe.com](https://stripe.com) | <img src="stripe-com.svg" alt="geolint: 96/100 · A"> 96/100 | A | 0 | 1 | <img src="stripe-com-trend.svg" alt="stripe.com score over time"> | 2026-09-19 |
+| [vercel.com](https://vercel.com) | <img src="vercel-com.svg" alt="geolint: 95/100 · A"> 95/100 | A | 0 | 2 | <img src="vercel-com-trend.svg" alt="vercel.com score over time"> | 2026-09-19 |
+| [anthropic.com](https://www.anthropic.com) | <img src="anthropic-com.svg" alt="geolint: 92/100 · A"> 92/100 | A | 0 | 4 | <img src="anthropic-com-trend.svg" alt="anthropic.com score over time"> | 2026-09-19 |
+| [news.ycombinator.com](https://news.ycombinator.com) | <img src="news-ycombinator-com.svg" alt="geolint: 90/100 · A"> 90/100 | A | 0 | 5 | <img src="news-ycombinator-com-trend.svg" alt="news.ycombinator.com score over time"> | 2026-09-19 |
+| [github.com](https://github.com) | <img src="github-com.svg" alt="geolint: 89/100 · B"> 89/100 | B | 1 | 4 | <img src="github-com-trend.svg" alt="github.com score over time"> | 2026-09-19 |
+| [example.com](https://example.com) | <img src="example-com.svg" alt="geolint: 86/100 · B"> 86/100 | B | 1 | 6 | <img src="example-com-trend.svg" alt="example.com score over time"> | 2026-09-19 |
+| [openai.com](https://openai.com) | <img src="openai-com.svg" alt="geolint: 83/100 · B"> 83/100 | B | 2 | 6 | <img src="openai-com-trend.svg" alt="openai.com score over time"> | 2026-09-19 |
+| [perplexity.ai](https://www.perplexity.ai) | <img src="perplexity-ai.svg" alt="geolint: 81/100 · B"> 81/100 | B | 3 | 5 | <img src="perplexity-ai-trend.svg" alt="perplexity.ai score over time"> | 2026-09-19 |
 
 Each site has five files: `<slug>.json` (the raw
 `geolint check -f json` report, or an `{ "error": "…" }` object when the
