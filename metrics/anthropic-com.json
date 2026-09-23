@@ -5,12 +5,12 @@
   },
   "url": "https://www.anthropic.com/",
   "finalUrl": "https://www.anthropic.com/",
-  "scannedAt": "2026-09-22T09:56:17.899Z",
-  "durationMs": 744,
+  "scannedAt": "2026-09-23T09:58:15.034Z",
+  "durationMs": 971,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 72,
+    "timingMs": 117,
     "redirected": false
   },
   "robots": {
@@ -72,10 +72,10 @@
     },
     {
       "severity": "warn",
-      "message": "Thin content — only ~151 words of visible text",
+      "message": "Thin content — only ~139 words of visible text",
       "detail": "Pages with very little extractable text give AI engines nothing to quote; they also correlate with client-rendered shells.",
       "fix": "Expand the page with substantive, answerable content — explanations, specifics, Q&A.",
-      "evidence": "151 words",
+      "evidence": "139 words",
       "ruleId": "content/thin-content"
     },
     {
@@ -101,7 +101,7 @@
     },
     {
       "severity": "info",
-      "message": "Few concrete data points found (0 numeric stats)",
+      "message": "Few concrete data points found (2 numeric stats)",
       "detail": "Percentages, growth figures and quantities give AI engines precise, attributable claims to quote.",
       "fix": "Add verifiable numbers — percentages, counts, benchmarks — near the claims they support.",
       "ruleId": "content/no-data-points"
