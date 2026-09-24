@@ -5,12 +5,12 @@
   },
   "url": "https://news.ycombinator.com/",
   "finalUrl": "https://news.ycombinator.com/",
-  "scannedAt": "2026-09-23T09:58:21.613Z",
-  "durationMs": 672,
+  "scannedAt": "2026-09-24T09:59:43.938Z",
+  "durationMs": 323,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 234,
+    "timingMs": 94,
     "redirected": false
   },
   "robots": {
@@ -108,7 +108,7 @@
     },
     {
       "severity": "info",
-      "message": "Few concrete data points found (1 numeric stats)",
+      "message": "Few concrete data points found (0 numeric stats)",
       "detail": "Percentages, growth figures and quantities give AI engines precise, attributable claims to quote.",
       "fix": "Add verifiable numbers — percentages, counts, benchmarks — near the claims they support.",
       "ruleId": "content/no-data-points"
