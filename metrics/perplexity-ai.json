@@ -5,12 +5,12 @@
   },
   "url": "https://www.perplexity.ai/",
   "finalUrl": "https://www.perplexity.ai/",
-  "scannedAt": "2026-09-25T10:11:13.586Z",
-  "durationMs": 216,
+  "scannedAt": "2026-09-26T09:51:52.208Z",
+  "durationMs": 372,
   "page": {
     "status": 403,
     "contentType": "text/html; charset=UTF-8",
-    "timingMs": 56,
+    "timingMs": 67,
     "redirected": false
   },
   "robots": {
