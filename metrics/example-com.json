@@ -5,12 +5,12 @@
   },
   "url": "https://example.com/",
   "finalUrl": "https://example.com/",
-  "scannedAt": "2026-09-28T11:41:02.062Z",
-  "durationMs": 200,
+  "scannedAt": "2026-09-29T11:21:45.908Z",
+  "durationMs": 208,
   "page": {
     "status": 200,
-    "contentType": "text/html",
-    "timingMs": 64,
+    "contentType": "text/html; charset=utf-8",
+    "timingMs": 75,
     "redirected": false
   },
   "robots": {
@@ -80,11 +80,18 @@
     },
     {
       "severity": "warn",
-      "message": "Thin content — only ~17 words of visible text",
+      "message": "Thin content — only ~26 words of visible text",
       "detail": "Pages with very little extractable text give AI engines nothing to quote; they also correlate with client-rendered shells.",
       "fix": "Expand the page with substantive, answerable content — explanations, specifics, Q&A.",
-      "evidence": "17 words",
+      "evidence": "26 words",
       "ruleId": "content/thin-content"
+    },
+    {
+      "severity": "warn",
+      "message": "No <h1> on the page",
+      "detail": "The H1 anchors how machines understand and index the page topic.",
+      "fix": "Add one descriptive <h1> that states what the page is about.",
+      "ruleId": "content/no-h1"
     },
     {
       "severity": "info",
@@ -115,19 +122,11 @@
       "ruleId": "content/no-data-points"
     },
     {
-      "severity": "info",
-      "message": "Lead paragraph after the H1 is thin (~15 words)",
-      "detail": "A teaser or caption-length opener is hard to quote verbatim; engines prefer a self-contained answer they can lift whole.",
-      "fix": "Expand the opening paragraph into a direct, self-contained answer (roughly 40–80 words) before diving into details.",
-      "evidence": "This domain is for use in documentation examples without needing permission. Avoid use in operations.",
-      "ruleId": "content/answer-first"
-    },
-    {
       "severity": "error",
       "message": "Page appears client-rendered — AI crawlers see an empty shell",
-      "detail": "Only ~17 words of visible text in the initial HTML — likely rendered client-side.",
+      "detail": "Only ~26 words of visible text in the initial HTML — likely rendered client-side.",
       "fix": "Use server-side rendering, static generation or prerendering so the real content is in the first HTML response.",
-      "evidence": "17 words of visible text",
+      "evidence": "26 words of visible text",
       "ruleId": "technical/client-rendered"
     },
     {
@@ -153,7 +152,7 @@
       "ruleId": "technical/meta-description"
     }
   ],
-  "score": 86,
+  "score": 85,
   "grade": "B",
   "categories": {
     "ai-crawler": {
@@ -238,10 +237,10 @@
       ]
     },
     "content": {
-      "score": 80,
+      "score": 76,
       "errors": 0,
-      "warnings": 2,
-      "infos": 4,
+      "warnings": 3,
+      "infos": 3,
       "rulesRun": [
         "content/thin-content",
         "content/no-h1",
@@ -257,10 +256,10 @@
         "content/stale-dates"
       ],
       "passed": [
-        "content/no-h1",
         "content/images-no-alt",
         "content/no-structure",
         "content/lang-missing",
+        "content/answer-first",
         "content/self-contained-paragraphs",
         "content/stale-dates"
       ]
