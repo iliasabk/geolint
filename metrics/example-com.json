@@ -5,12 +5,12 @@
   },
   "url": "https://example.com/",
   "finalUrl": "https://example.com/",
-  "scannedAt": "2026-10-02T11:06:08.165Z",
-  "durationMs": 151,
+  "scannedAt": "2026-10-03T10:24:37.374Z",
+  "durationMs": 198,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 54,
+    "timingMs": 70,
     "redirected": false
   },
   "robots": {
@@ -80,10 +80,10 @@
     },
     {
       "severity": "warn",
-      "message": "Thin content — only ~26 words of visible text",
+      "message": "Thin content — only ~25 words of visible text",
       "detail": "Pages with very little extractable text give AI engines nothing to quote; they also correlate with client-rendered shells.",
       "fix": "Expand the page with substantive, answerable content — explanations, specifics, Q&A.",
-      "evidence": "26 words",
+      "evidence": "25 words",
       "ruleId": "content/thin-content"
     },
     {
@@ -124,9 +124,9 @@
     {
       "severity": "error",
       "message": "Page appears client-rendered — AI crawlers see an empty shell",
-      "detail": "Only ~26 words of visible text in the initial HTML — likely rendered client-side.",
+      "detail": "Only ~25 words of visible text in the initial HTML — likely rendered client-side.",
       "fix": "Use server-side rendering, static generation or prerendering so the real content is in the first HTML response.",
-      "evidence": "26 words of visible text",
+      "evidence": "25 words of visible text",
       "ruleId": "technical/client-rendered"
     },
     {
