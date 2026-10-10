@@ -5,12 +5,12 @@
   },
   "url": "https://news.ycombinator.com/",
   "finalUrl": "https://news.ycombinator.com/",
-  "scannedAt": "2026-10-09T11:53:31.371Z",
-  "durationMs": 262,
+  "scannedAt": "2026-10-10T11:10:23.125Z",
+  "durationMs": 258,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 108,
+    "timingMs": 95,
     "redirected": false
   },
   "robots": {
@@ -105,13 +105,6 @@
       "detail": "No meta[name=author], rel=author, JSON-LD author or author/byline markup — the content looks anonymous.",
       "fix": "Attribute the content: an author byline, meta[name=author] or a Person in JSON-LD author.",
       "ruleId": "content/no-author"
-    },
-    {
-      "severity": "info",
-      "message": "Few concrete data points found (1 numeric stats)",
-      "detail": "Percentages, growth figures and quantities give AI engines precise, attributable claims to quote.",
-      "fix": "Add verifiable numbers — percentages, counts, benchmarks — near the claims they support.",
-      "ruleId": "content/no-data-points"
     },
     {
       "severity": "warn",
@@ -221,10 +214,10 @@
       ]
     },
     "content": {
-      "score": 82,
+      "score": 84,
       "errors": 0,
       "warnings": 2,
-      "infos": 3,
+      "infos": 2,
       "rulesRun": [
         "content/thin-content",
         "content/no-h1",
@@ -241,6 +234,7 @@
       ],
       "passed": [
         "content/thin-content",
+        "content/no-data-points",
         "content/images-no-alt",
         "content/no-structure",
         "content/lang-missing",
