@@ -5,12 +5,12 @@
   },
   "url": "https://vercel.com/",
   "finalUrl": "https://vercel.com/",
-  "scannedAt": "2026-10-13T12:42:03.759Z",
-  "durationMs": 1961,
+  "scannedAt": "2026-10-14T10:10:53.704Z",
+  "durationMs": 1510,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 127,
+    "timingMs": 131,
     "redirected": false
   },
   "robots": {
@@ -42,10 +42,10 @@
     },
     {
       "severity": "warn",
-      "message": "Thin content — only ~109 words of visible text",
+      "message": "Thin content — only ~108 words of visible text",
       "detail": "Pages with very little extractable text give AI engines nothing to quote; they also correlate with client-rendered shells.",
       "fix": "Expand the page with substantive, answerable content — explanations, specifics, Q&A.",
-      "evidence": "109 words",
+      "evidence": "108 words",
       "ruleId": "content/thin-content"
     },
     {
