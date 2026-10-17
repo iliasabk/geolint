@@ -5,12 +5,12 @@
   },
   "url": "https://vercel.com/",
   "finalUrl": "https://vercel.com/",
-  "scannedAt": "2026-10-16T09:47:14.382Z",
-  "durationMs": 2135,
+  "scannedAt": "2026-10-17T09:19:39.189Z",
+  "durationMs": 1749,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 157,
+    "timingMs": 125,
     "redirected": false
   },
   "robots": {
@@ -42,10 +42,10 @@
     },
     {
       "severity": "warn",
-      "message": "Thin content — only ~123 words of visible text",
+      "message": "Thin content — only ~135 words of visible text",
       "detail": "Pages with very little extractable text give AI engines nothing to quote; they also correlate with client-rendered shells.",
       "fix": "Expand the page with substantive, answerable content — explanations, specifics, Q&A.",
-      "evidence": "123 words",
+      "evidence": "135 words",
       "ruleId": "content/thin-content"
     },
     {
@@ -68,13 +68,6 @@
       "detail": "No meta[name=author], rel=author, JSON-LD author or author/byline markup — the content looks anonymous.",
       "fix": "Attribute the content: an author byline, meta[name=author] or a Person in JSON-LD author.",
       "ruleId": "content/no-author"
-    },
-    {
-      "severity": "info",
-      "message": "Few concrete data points found (1 numeric stats)",
-      "detail": "Percentages, growth figures and quantities give AI engines precise, attributable claims to quote.",
-      "fix": "Add verifiable numbers — percentages, counts, benchmarks — near the claims they support.",
-      "ruleId": "content/no-data-points"
     },
     {
       "severity": "info",
@@ -182,10 +175,10 @@
       ]
     },
     "content": {
-      "score": 80,
+      "score": 82,
       "errors": 0,
       "warnings": 2,
-      "infos": 4,
+      "infos": 3,
       "rulesRun": [
         "content/thin-content",
         "content/no-h1",
@@ -202,6 +195,7 @@
       ],
       "passed": [
         "content/no-h1",
+        "content/no-data-points",
         "content/images-no-alt",
         "content/no-structure",
         "content/lang-missing",
