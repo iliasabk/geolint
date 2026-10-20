@@ -5,19 +5,19 @@
   },
   "url": "https://github.com/",
   "finalUrl": "https://github.com/",
-  "scannedAt": "2026-10-19T10:44:48.277Z",
-  "durationMs": 855,
+  "scannedAt": "2026-10-20T10:02:26.769Z",
+  "durationMs": 1298,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 115,
+    "timingMs": 188,
     "redirected": false
   },
   "robots": {
     "url": "https://github.com/robots.txt",
     "status": 200,
     "groupCount": 6,
-    "sitemaps": []
+    "sitemaps": ["https://github.com/sitemap_marketing.xml"]
   },
   "llmsTxt": {
     "url": "https://github.com/llms.txt",
@@ -65,6 +65,13 @@
       "fix": "Allow the recommended paths for AI crawler tokens in robots.txt, or remove those links from llms.txt.",
       "evidence": "https://github.com/github/github-mcp-server — blocked for Bytespider",
       "ruleId": "llms-txt/links-blocked-by-robots"
+    },
+    {
+      "severity": "info",
+      "message": "No emerging AI manifest files found",
+      "detail": "Checked /agents.json, /ai.txt, /.well-known/ai-plugin.json — all absent. These conventions are early and entirely optional.",
+      "fix": "Prioritize /llms.txt; add agents.json or ai.txt only if they fit your AI distribution strategy.",
+      "ruleId": "llms-txt/ai-manifest"
     },
     {
       "severity": "warn",
@@ -125,14 +132,14 @@
     },
     {
       "severity": "warn",
-      "message": "No sitemap discoverable",
-      "detail": "No Sitemap directive in robots.txt and /sitemap.xml does not resolve.",
-      "fix": "Publish an XML sitemap at /sitemap.xml and declare it in robots.txt (\"Sitemap: https://…/sitemap.xml\").",
-      "evidence": "https://github.com/sitemap.xml → HTTP 406",
-      "ruleId": "technical/sitemap-missing"
+      "message": "376 of 376 sitemap URLs lack a <lastmod>",
+      "detail": "Without lastmod, crawlers cannot tell which pages changed — they either re-fetch everything or trust nothing.",
+      "fix": "Emit an accurate <lastmod> for every <url> in the sitemap.",
+      "evidence": "0/376 URLs carry <lastmod>",
+      "ruleId": "technical/sitemap-quality"
     }
   ],
-  "score": 89,
+  "score": 88,
   "grade": "B",
   "categories": {
     "ai-crawler": {
@@ -163,10 +170,10 @@
       ]
     },
     "llms-txt": {
-      "score": 88,
+      "score": 86,
       "errors": 0,
       "warnings": 2,
-      "infos": 0,
+      "infos": 1,
       "rulesRun": [
         "llms-txt/missing",
         "llms-txt/invalid-structure",
@@ -190,8 +197,7 @@
         "llms-txt/relative-links",
         "llms-txt/optional-not-last",
         "llms-txt/robots-directives",
-        "llms-txt/multiple-h1",
-        "llms-txt/ai-manifest"
+        "llms-txt/multiple-h1"
       ]
     },
     "schema": {
@@ -266,13 +272,13 @@
         "technical/page-unreachable",
         "technical/http-error",
         "technical/client-rendered",
+        "technical/sitemap-missing",
         "technical/canonical",
         "technical/title-missing",
         "technical/meta-description",
         "technical/slow-response",
         "technical/redirect",
-        "technical/https",
-        "technical/sitemap-quality"
+        "technical/https"
       ]
     }
   },

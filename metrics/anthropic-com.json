@@ -5,12 +5,12 @@
   },
   "url": "https://www.anthropic.com/",
   "finalUrl": "https://www.anthropic.com/",
-  "scannedAt": "2026-10-19T10:44:49.264Z",
-  "durationMs": 1401,
+  "scannedAt": "2026-10-20T10:02:28.249Z",
+  "durationMs": 1308,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 138,
+    "timingMs": 170,
     "redirected": false
   },
   "robots": {
@@ -72,10 +72,10 @@
     },
     {
       "severity": "warn",
-      "message": "Thin content — only ~127 words of visible text",
+      "message": "Thin content — only ~130 words of visible text",
       "detail": "Pages with very little extractable text give AI engines nothing to quote; they also correlate with client-rendered shells.",
       "fix": "Expand the page with substantive, answerable content — explanations, specifics, Q&A.",
-      "evidence": "127 words",
+      "evidence": "130 words",
       "ruleId": "content/thin-content"
     },
     {
