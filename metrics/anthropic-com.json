@@ -5,12 +5,12 @@
   },
   "url": "https://www.anthropic.com/",
   "finalUrl": "https://www.anthropic.com/",
-  "scannedAt": "2026-10-20T10:02:28.249Z",
-  "durationMs": 1308,
+  "scannedAt": "2026-10-21T10:07:10.020Z",
+  "durationMs": 1766,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 170,
+    "timingMs": 148,
     "redirected": false
   },
   "robots": {
@@ -72,10 +72,10 @@
     },
     {
       "severity": "warn",
-      "message": "Thin content — only ~130 words of visible text",
+      "message": "Thin content — only ~197 words of visible text",
       "detail": "Pages with very little extractable text give AI engines nothing to quote; they also correlate with client-rendered shells.",
       "fix": "Expand the page with substantive, answerable content — explanations, specifics, Q&A.",
-      "evidence": "130 words",
+      "evidence": "197 words",
       "ruleId": "content/thin-content"
     },
     {
@@ -98,9 +98,24 @@
       "detail": "No meta[name=author], rel=author, JSON-LD author or author/byline markup — the content looks anonymous.",
       "fix": "Attribute the content: an author byline, meta[name=author] or a Person in JSON-LD author.",
       "ruleId": "content/no-author"
+    },
+    {
+      "severity": "info",
+      "message": "5 of 5 images have no alt text",
+      "detail": "Alt text is the primary way AI systems understand what an image shows; missing alt makes visual content uncitable.",
+      "fix": "Write descriptive alt text for meaningful images (purely decorative ones can keep alt=\"\").",
+      "ruleId": "content/images-no-alt"
+    },
+    {
+      "severity": "info",
+      "message": "Lead paragraph after the H1 is thin (~1 words)",
+      "detail": "A teaser or caption-length opener is hard to quote verbatim; engines prefer a self-contained answer they can lift whole.",
+      "fix": "Expand the opening paragraph into a direct, self-contained answer (roughly 40–80 words) before diving into details.",
+      "evidence": "Announcements",
+      "ruleId": "content/answer-first"
     }
   ],
-  "score": 93,
+  "score": 92,
   "grade": "A",
   "categories": {
     "ai-crawler": {
@@ -186,10 +201,10 @@
       ]
     },
     "content": {
-      "score": 84,
+      "score": 80,
       "errors": 0,
       "warnings": 2,
-      "infos": 2,
+      "infos": 4,
       "rulesRun": [
         "content/thin-content",
         "content/no-h1",
@@ -207,10 +222,8 @@
       "passed": [
         "content/no-h1",
         "content/no-data-points",
-        "content/images-no-alt",
         "content/no-structure",
         "content/lang-missing",
-        "content/answer-first",
         "content/self-contained-paragraphs",
         "content/stale-dates"
       ]
