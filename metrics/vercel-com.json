@@ -5,12 +5,12 @@
   },
   "url": "https://vercel.com/",
   "finalUrl": "https://vercel.com/",
-  "scannedAt": "2026-10-21T10:07:14.611Z",
-  "durationMs": 1639,
+  "scannedAt": "2026-10-22T10:09:47.313Z",
+  "durationMs": 1736,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 105,
+    "timingMs": 140,
     "redirected": false
   },
   "robots": {
@@ -26,6 +26,14 @@
     "linkCount": 28
   },
   "findings": [
+    {
+      "severity": "info",
+      "message": "No llms-full.txt found",
+      "detail": "GET https://vercel.com/llms-full.txt returned HTTP 404. The optional full-content companion is absent.",
+      "fix": "Consider publishing /llms-full.txt with your key documentation inlined as markdown.",
+      "evidence": "https://vercel.com/llms-full.txt → HTTP 404",
+      "ruleId": "llms-txt/llms-full-missing"
+    },
     {
       "severity": "info",
       "message": "No emerging AI manifest files found",
@@ -119,10 +127,10 @@
       ]
     },
     "llms-txt": {
-      "score": 98,
+      "score": 96,
       "errors": 0,
       "warnings": 0,
-      "infos": 1,
+      "infos": 2,
       "rulesRun": [
         "llms-txt/missing",
         "llms-txt/invalid-structure",
@@ -144,7 +152,6 @@
         "llms-txt/no-sections",
         "llms-txt/broken-links",
         "llms-txt/links-blocked-by-robots",
-        "llms-txt/llms-full-missing",
         "llms-txt/relative-links",
         "llms-txt/optional-not-last",
         "llms-txt/robots-directives",

@@ -5,12 +5,12 @@
   },
   "url": "https://github.com/",
   "finalUrl": "https://github.com/",
-  "scannedAt": "2026-10-21T10:07:08.419Z",
-  "durationMs": 1376,
+  "scannedAt": "2026-10-22T10:09:39.641Z",
+  "durationMs": 1363,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 115,
+    "timingMs": 198,
     "redirected": false
   },
   "robots": {
@@ -117,7 +117,7 @@
     },
     {
       "severity": "info",
-      "message": "17 of 24 images have no alt text",
+      "message": "18 of 25 images have no alt text",
       "detail": "Alt text is the primary way AI systems understand what an image shows; missing alt makes visual content uncitable.",
       "fix": "Write descriptive alt text for meaningful images (purely decorative ones can keep alt=\"\").",
       "ruleId": "content/images-no-alt"

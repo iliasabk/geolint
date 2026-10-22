@@ -5,12 +5,12 @@
   },
   "url": "https://www.anthropic.com/",
   "finalUrl": "https://www.anthropic.com/",
-  "scannedAt": "2026-10-21T10:07:10.020Z",
-  "durationMs": 1766,
+  "scannedAt": "2026-10-22T10:09:41.212Z",
+  "durationMs": 2568,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 148,
+    "timingMs": 198,
     "redirected": false
   },
   "robots": {
@@ -71,14 +71,6 @@
       "ruleId": "schema/no-breadcrumb"
     },
     {
-      "severity": "warn",
-      "message": "Thin content — only ~197 words of visible text",
-      "detail": "Pages with very little extractable text give AI engines nothing to quote; they also correlate with client-rendered shells.",
-      "fix": "Expand the page with substantive, answerable content — explanations, specifics, Q&A.",
-      "evidence": "197 words",
-      "ruleId": "content/thin-content"
-    },
-    {
       "severity": "info",
       "message": "No question-shaped headings (h2/h3 ending in \"?\")",
       "detail": "Question headings map directly onto user prompts and make sections self-contained citable answers.",
@@ -101,21 +93,20 @@
     },
     {
       "severity": "info",
-      "message": "5 of 5 images have no alt text",
+      "message": "4 of 4 images have no alt text",
       "detail": "Alt text is the primary way AI systems understand what an image shows; missing alt makes visual content uncitable.",
       "fix": "Write descriptive alt text for meaningful images (purely decorative ones can keep alt=\"\").",
       "ruleId": "content/images-no-alt"
     },
     {
       "severity": "info",
-      "message": "Lead paragraph after the H1 is thin (~1 words)",
-      "detail": "A teaser or caption-length opener is hard to quote verbatim; engines prefer a self-contained answer they can lift whole.",
-      "fix": "Expand the opening paragraph into a direct, self-contained answer (roughly 40–80 words) before diving into details.",
-      "evidence": "Announcements",
+      "message": "No paragraph directly follows the H1",
+      "detail": "Whatever sits under the H1 — image, list, navigation — is what engines read first; a declarative lead paragraph is the easiest span to cite.",
+      "fix": "Open the article with a 2–4 sentence paragraph that directly answers the question the H1 poses.",
       "ruleId": "content/answer-first"
     }
   ],
-  "score": 92,
+  "score": 93,
   "grade": "A",
   "categories": {
     "ai-crawler": {
@@ -201,9 +192,9 @@
       ]
     },
     "content": {
-      "score": 80,
+      "score": 86,
       "errors": 0,
-      "warnings": 2,
+      "warnings": 1,
       "infos": 4,
       "rulesRun": [
         "content/thin-content",
@@ -220,6 +211,7 @@
         "content/stale-dates"
       ],
       "passed": [
+        "content/thin-content",
         "content/no-h1",
         "content/no-data-points",
         "content/no-structure",
