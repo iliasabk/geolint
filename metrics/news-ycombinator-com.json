@@ -5,12 +5,12 @@
   },
   "url": "https://news.ycombinator.com/",
   "finalUrl": "https://news.ycombinator.com/",
-  "scannedAt": "2026-10-25T09:47:53.521Z",
-  "durationMs": 1002,
+  "scannedAt": "2026-10-26T11:05:55.148Z",
+  "durationMs": 329,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 287,
+    "timingMs": 136,
     "redirected": false
   },
   "robots": {
