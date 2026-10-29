@@ -5,12 +5,12 @@
   },
   "url": "https://github.com/",
   "finalUrl": "https://github.com/",
-  "scannedAt": "2026-10-28T11:19:42.838Z",
-  "durationMs": 939,
+  "scannedAt": "2026-10-29T11:30:03.198Z",
+  "durationMs": 1733,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 117,
+    "timingMs": 46,
     "redirected": false
   },
   "robots": {
@@ -110,24 +110,16 @@
     },
     {
       "severity": "info",
-      "message": "Few concrete data points found (2 numeric stats)",
-      "detail": "Percentages, growth figures and quantities give AI engines precise, attributable claims to quote.",
-      "fix": "Add verifiable numbers — percentages, counts, benchmarks — near the claims they support.",
-      "ruleId": "content/no-data-points"
-    },
-    {
-      "severity": "info",
-      "message": "18 of 25 images have no alt text",
+      "message": "15 of 22 images have no alt text",
       "detail": "Alt text is the primary way AI systems understand what an image shows; missing alt makes visual content uncitable.",
       "fix": "Write descriptive alt text for meaningful images (purely decorative ones can keep alt=\"\").",
       "ruleId": "content/images-no-alt"
     },
     {
       "severity": "info",
-      "message": "Lead paragraph after the H1 is thin (~18 words)",
-      "detail": "A teaser or caption-length opener is hard to quote verbatim; engines prefer a self-contained answer they can lift whole.",
-      "fix": "Expand the opening paragraph into a direct, self-contained answer (roughly 40–80 words) before diving into details.",
-      "evidence": "Tools and trends evolve, but collaboration endures. With GitHub, developers, agents, and code come together on one platf",
+      "message": "No paragraph directly follows the H1",
+      "detail": "Whatever sits under the H1 — image, list, navigation — is what engines read first; a declarative lead paragraph is the easiest span to cite.",
+      "fix": "Open the article with a 2–4 sentence paragraph that directly answers the question the H1 poses.",
       "ruleId": "content/answer-first"
     },
     {
@@ -139,7 +131,7 @@
       "ruleId": "technical/sitemap-quality"
     }
   ],
-  "score": 88,
+  "score": 89,
   "grade": "B",
   "categories": {
     "ai-crawler": {
@@ -222,10 +214,10 @@
       ]
     },
     "content": {
-      "score": 90,
+      "score": 92,
       "errors": 0,
       "warnings": 0,
-      "infos": 5,
+      "infos": 4,
       "rulesRun": [
         "content/thin-content",
         "content/no-h1",
@@ -244,6 +236,7 @@
         "content/thin-content",
         "content/no-h1",
         "content/missing-dates",
+        "content/no-data-points",
         "content/no-structure",
         "content/lang-missing",
         "content/self-contained-paragraphs",
