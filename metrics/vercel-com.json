@@ -5,12 +5,12 @@
   },
   "url": "https://vercel.com/",
   "finalUrl": "https://vercel.com/",
-  "scannedAt": "2026-11-06T12:56:16.821Z",
-  "durationMs": 2091,
+  "scannedAt": "2026-11-07T11:42:44.364Z",
+  "durationMs": 1718,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 169,
+    "timingMs": 127,
     "redirected": false
   },
   "robots": {

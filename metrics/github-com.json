@@ -5,12 +5,12 @@
   },
   "url": "https://github.com/",
   "finalUrl": "https://github.com/",
-  "scannedAt": "2026-11-06T12:56:10.305Z",
-  "durationMs": 799,
+  "scannedAt": "2026-11-07T11:42:39.390Z",
+  "durationMs": 995,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 99,
+    "timingMs": 59,
     "redirected": false
   },
   "robots": {
@@ -36,19 +36,11 @@
     },
     {
       "severity": "info",
-      "message": "Crawl-delay of 1s applies to GPTBot, OAI-SearchBot, ClaudeBot, anthropic-ai, PerplexityBot",
-      "detail": "Affected AI bots: GPTBot, OAI-SearchBot, ClaudeBot, anthropic-ai, PerplexityBot.",
+      "message": "Crawl-delay of 1s applies to GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User",
+      "detail": "Affected AI bots: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-User, Claude-SearchBot, PerplexityBot, Perplexity-User.",
       "fix": "Remove the Crawl-delay or exempt AI search bots with their own groups if you want your content indexed promptly.",
-      "evidence": "User-agent: gptbot, oai-searchbot, claudebot, anthropic-ai, perplexitybot\nCrawl-delay: 1",
+      "evidence": "User-agent: gptbot, oai-searchbot, chatgpt-user, claudebot, claude-searchbot, claude-user, perplexitybot, perplexity-user\nCrawl-delay: 1",
       "ruleId": "ai-crawler/crawl-delay"
-    },
-    {
-      "severity": "info",
-      "message": "Stale token 'anthropic-ai' — Anthropic now uses 'ClaudeBot'",
-      "detail": "'anthropic-ai' matched retired token anthropic-ai; this rule has no effect on current Anthropic crawlers.",
-      "fix": "Replace 'User-agent: anthropic-ai' with 'User-agent: ClaudeBot' (or delete the stale block).",
-      "evidence": "User-agent: anthropic-ai",
-      "ruleId": "ai-crawler/stale-tokens"
     },
     {
       "severity": "warn",
@@ -135,10 +127,10 @@
   "grade": "B",
   "categories": {
     "ai-crawler": {
-      "score": 81,
+      "score": 83,
       "errors": 1,
       "warnings": 0,
-      "infos": 2,
+      "infos": 1,
       "rulesRun": [
         "ai-crawler/search-bots-blocked",
         "ai-crawler/training-bots-blocked",
@@ -158,7 +150,8 @@
         "ai-crawler/robots-unreachable",
         "ai-crawler/meta-robots-blocking",
         "ai-crawler/ai-opt-out-signals",
-        "ai-crawler/user-fetch-bypass"
+        "ai-crawler/user-fetch-bypass",
+        "ai-crawler/stale-tokens"
       ]
     },
     "llms-txt": {
