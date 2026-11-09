@@ -5,9 +5,14 @@
   },
   "url": "https://github.com/",
   "finalUrl": "https://github.com/",
-  "scannedAt": "2026-11-08T11:55:17.422Z",
-  "durationMs": 35435,
-  "page": null,
+  "scannedAt": "2026-11-09T13:52:31.379Z",
+  "durationMs": 896,
+  "page": {
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "timingMs": 131,
+    "redirected": false
+  },
   "robots": {
     "url": "https://github.com/robots.txt",
     "status": 200,
@@ -61,12 +66,53 @@
       "ruleId": "llms-txt/ai-manifest"
     },
     {
-      "severity": "error",
-      "message": "Page could not be fetched",
-      "detail": "The request failed at the network level (DNS, connection, TLS or timeout). AI crawlers hitting the same wall see nothing.",
-      "fix": "Check the URL, DNS, TLS certificate and that the server responds to plain GET requests without requiring JS or auth.",
-      "evidence": "https://github.com/",
-      "ruleId": "technical/page-unreachable"
+      "severity": "warn",
+      "message": "No JSON-LD structured data on the page",
+      "detail": "AI engines use schema.org markup to identify entities, dates, authors and page types. Without it they fall back to unreliable inference.",
+      "fix": "Add JSON-LD blocks describing the page (Article, Organization, BreadcrumbList, FAQPage as appropriate).",
+      "ruleId": "schema/no-jsonld"
+    },
+    {
+      "severity": "info",
+      "message": "No Organization schema found",
+      "detail": "Without entity grounding, engines cannot connect this site to a known organization — weaker trust signals for citation.",
+      "fix": "Add an Organization JSON-LD block (name, url, logo, sameAs links) at least on the homepage.",
+      "ruleId": "schema/no-organization"
+    },
+    {
+      "severity": "info",
+      "message": "No BreadcrumbList schema found",
+      "detail": "Breadcrumbs expose site structure to machines; without them a page floats without context.",
+      "fix": "Add BreadcrumbList JSON-LD matching the visible breadcrumb trail.",
+      "ruleId": "schema/no-breadcrumb"
+    },
+    {
+      "severity": "info",
+      "message": "No question-shaped headings (h2/h3 ending in \"?\")",
+      "detail": "Question headings map directly onto user prompts and make sections self-contained citable answers.",
+      "fix": "Rewrite a few section headings as the actual questions your audience asks.",
+      "ruleId": "content/no-question-headings"
+    },
+    {
+      "severity": "info",
+      "message": "No author attribution found",
+      "detail": "No meta[name=author], rel=author, JSON-LD author or author/byline markup — the content looks anonymous.",
+      "fix": "Attribute the content: an author byline, meta[name=author] or a Person in JSON-LD author.",
+      "ruleId": "content/no-author"
+    },
+    {
+      "severity": "info",
+      "message": "15 of 22 images have no alt text",
+      "detail": "Alt text is the primary way AI systems understand what an image shows; missing alt makes visual content uncitable.",
+      "fix": "Write descriptive alt text for meaningful images (purely decorative ones can keep alt=\"\").",
+      "ruleId": "content/images-no-alt"
+    },
+    {
+      "severity": "info",
+      "message": "No paragraph directly follows the H1",
+      "detail": "Whatever sits under the H1 — image, list, navigation — is what engines read first; a declarative lead paragraph is the easiest span to cite.",
+      "fix": "Open the article with a 2–4 sentence paragraph that directly answers the question the H1 poses.",
+      "ruleId": "content/answer-first"
     },
     {
       "severity": "warn",
@@ -77,8 +123,8 @@
       "ruleId": "technical/sitemap-quality"
     }
   ],
-  "score": 90,
-  "grade": "A",
+  "score": 89,
+  "grade": "B",
   "categories": {
     "ai-crawler": {
       "score": 83,
@@ -140,10 +186,10 @@
       ]
     },
     "schema": {
-      "score": 100,
+      "score": 90,
       "errors": 0,
-      "warnings": 0,
-      "infos": 0,
+      "warnings": 1,
+      "infos": 2,
       "rulesRun": [
         "schema/no-jsonld",
         "schema/invalid-jsonld",
@@ -154,20 +200,17 @@
         "schema/required-fields"
       ],
       "passed": [
-        "schema/no-jsonld",
         "schema/invalid-jsonld",
         "schema/missing-article-fields",
         "schema/no-faq-schema",
-        "schema/no-organization",
-        "schema/no-breadcrumb",
         "schema/required-fields"
       ]
     },
     "content": {
-      "score": 100,
+      "score": 92,
       "errors": 0,
       "warnings": 0,
-      "infos": 0,
+      "infos": 4,
       "rulesRun": [
         "content/thin-content",
         "content/no-h1",
@@ -185,21 +228,17 @@
       "passed": [
         "content/thin-content",
         "content/no-h1",
-        "content/no-question-headings",
         "content/missing-dates",
-        "content/no-author",
         "content/no-data-points",
-        "content/images-no-alt",
         "content/no-structure",
         "content/lang-missing",
-        "content/answer-first",
         "content/self-contained-paragraphs",
         "content/stale-dates"
       ]
     },
     "technical": {
-      "score": 79,
-      "errors": 1,
+      "score": 94,
+      "errors": 0,
       "warnings": 1,
       "infos": 0,
       "rulesRun": [
@@ -216,6 +255,7 @@
         "technical/sitemap-quality"
       ],
       "passed": [
+        "technical/page-unreachable",
         "technical/http-error",
         "technical/client-rendered",
         "technical/sitemap-missing",
