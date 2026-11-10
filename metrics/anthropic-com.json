@@ -5,12 +5,12 @@
   },
   "url": "https://www.anthropic.com/",
   "finalUrl": "https://www.anthropic.com/",
-  "scannedAt": "2026-11-09T13:52:32.402Z",
-  "durationMs": 1357,
+  "scannedAt": "2026-11-10T13:27:11.658Z",
+  "durationMs": 1879,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 167,
+    "timingMs": 144,
     "redirected": false
   },
   "robots": {
@@ -93,7 +93,7 @@
     },
     {
       "severity": "info",
-      "message": "4 of 4 images have no alt text",
+      "message": "5 of 5 images have no alt text",
       "detail": "Alt text is the primary way AI systems understand what an image shows; missing alt makes visual content uncitable.",
       "fix": "Write descriptive alt text for meaningful images (purely decorative ones can keep alt=\"\").",
       "ruleId": "content/images-no-alt"
