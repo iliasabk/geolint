@@ -5,12 +5,12 @@
   },
   "url": "https://stripe.com/",
   "finalUrl": "https://stripe.com/",
-  "scannedAt": "2026-11-12T13:44:50.931Z",
-  "durationMs": 1751,
+  "scannedAt": "2026-11-13T13:05:14.357Z",
+  "durationMs": 1123,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 70,
+    "timingMs": 69,
     "redirected": false
   },
   "robots": {
@@ -23,7 +23,7 @@
     "url": "https://stripe.com/llms.txt",
     "status": 200,
     "title": "Stripe",
-    "linkCount": 308
+    "linkCount": 307
   },
   "findings": [
     {
