@@ -5,12 +5,12 @@
   },
   "url": "https://openai.com/",
   "finalUrl": "https://openai.com/",
-  "scannedAt": "2026-11-20T13:59:20.720Z",
-  "durationMs": 586,
+  "scannedAt": "2026-11-21T13:27:10.310Z",
+  "durationMs": 1268,
   "page": {
-    "status": 403,
-    "contentType": "text/html; charset=UTF-8",
-    "timingMs": 87,
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "timingMs": 197,
     "redirected": false
   },
   "robots": {
@@ -21,7 +21,7 @@
   },
   "llmsTxt": {
     "url": "https://openai.com/llms.txt",
-    "status": 403,
+    "status": 404,
     "title": null,
     "linkCount": 0
   },
@@ -29,17 +29,17 @@
     {
       "severity": "warn",
       "message": "No llms.txt found",
-      "detail": "GET https://openai.com/llms.txt returned HTTP 403.",
+      "detail": "GET https://openai.com/llms.txt returned HTTP 404.",
       "fix": "Create /llms.txt at the site root: an H1 title, a short blockquote summary, and ## sections linking to your key content.",
-      "evidence": "https://openai.com/llms.txt → HTTP 403",
+      "evidence": "https://openai.com/llms.txt → HTTP 404",
       "ruleId": "llms-txt/missing"
     },
     {
       "severity": "info",
       "message": "No llms-full.txt found",
-      "detail": "GET https://openai.com/llms-full.txt returned HTTP 403. The optional full-content companion is absent.",
+      "detail": "GET https://openai.com/llms-full.txt returned HTTP 404. The optional full-content companion is absent.",
       "fix": "Consider publishing /llms-full.txt with your key documentation inlined as markdown.",
-      "evidence": "https://openai.com/llms-full.txt → HTTP 403",
+      "evidence": "https://openai.com/llms-full.txt → HTTP 404",
       "ruleId": "llms-txt/llms-full-missing"
     },
     {
@@ -72,10 +72,10 @@
     },
     {
       "severity": "warn",
-      "message": "Thin content — only ~0 words of visible text",
+      "message": "Thin content — only ~182 words of visible text",
       "detail": "Pages with very little extractable text give AI engines nothing to quote; they also correlate with client-rendered shells.",
       "fix": "Expand the page with substantive, answerable content — explanations, specifics, Q&A.",
-      "evidence": "0 words",
+      "evidence": "182 words",
       "ruleId": "content/thin-content"
     },
     {
@@ -93,13 +93,6 @@
       "ruleId": "content/no-question-headings"
     },
     {
-      "severity": "warn",
-      "message": "No machine-readable publication or modified date found",
-      "detail": "Checked <time datetime>, article:* meta tags and JSON-LD datePublished/dateModified — none present.",
-      "fix": "Expose a date via <time datetime=\"…\">, article:published_time meta or JSON-LD datePublished/dateModified.",
-      "ruleId": "content/missing-dates"
-    },
-    {
       "severity": "info",
       "message": "No author attribution found",
       "detail": "No meta[name=author], rel=author, JSON-LD author or author/byline markup — the content looks anonymous.",
@@ -112,54 +105,10 @@
       "detail": "Percentages, growth figures and quantities give AI engines precise, attributable claims to quote.",
       "fix": "Add verifiable numbers — percentages, counts, benchmarks — near the claims they support.",
       "ruleId": "content/no-data-points"
-    },
-    {
-      "severity": "info",
-      "message": "The <html> element has no lang attribute",
-      "detail": "Without a declared language, engines must infer it — and can get it wrong.",
-      "fix": "Add lang to the root element, e.g. <html lang=\"en\">.",
-      "ruleId": "content/lang-missing"
-    },
-    {
-      "severity": "error",
-      "message": "Page returned HTTP 403",
-      "detail": "Crawlers receive the error response, not your content.",
-      "fix": "Return a 200 with real content; fix the underlying 4xx/5xx or the rules that trigger it.",
-      "evidence": "https://openai.com/ → HTTP 403",
-      "ruleId": "technical/http-error"
-    },
-    {
-      "severity": "error",
-      "message": "Page appears client-rendered — AI crawlers see an empty shell",
-      "detail": "Only ~0 words of visible text in the initial HTML — likely rendered client-side.",
-      "fix": "Use server-side rendering, static generation or prerendering so the real content is in the first HTML response.",
-      "evidence": "0 words of visible text",
-      "ruleId": "technical/client-rendered"
-    },
-    {
-      "severity": "info",
-      "message": "No canonical link element",
-      "detail": "Without a canonical, engines pick one themselves — and may consolidate onto the wrong URL.",
-      "fix": "Add <link rel=\"canonical\" href=\"…\"> pointing at the preferred URL for this page.",
-      "ruleId": "technical/canonical"
-    },
-    {
-      "severity": "warn",
-      "message": "Missing or empty <title>",
-      "detail": "The title is the primary human-readable label attached to the page in AI answers.",
-      "fix": "Add a descriptive <title> that names the page and its purpose.",
-      "ruleId": "technical/title-missing"
-    },
-    {
-      "severity": "info",
-      "message": "No meta description",
-      "detail": "A 1–2 sentence description gives answer engines a clean, pre-written summary of the page.",
-      "fix": "Write a meta[name=description] of ~50–160 characters summarizing the page.",
-      "ruleId": "technical/meta-description"
     }
   ],
-  "score": 83,
-  "grade": "B",
+  "score": 92,
+  "grade": "A",
   "categories": {
     "ai-crawler": {
       "score": 100,
@@ -244,10 +193,10 @@
       ]
     },
     "content": {
-      "score": 74,
+      "score": 82,
       "errors": 0,
-      "warnings": 3,
-      "infos": 4,
+      "warnings": 2,
+      "infos": 3,
       "rulesRun": [
         "content/thin-content",
         "content/no-h1",
@@ -263,18 +212,20 @@
         "content/stale-dates"
       ],
       "passed": [
+        "content/missing-dates",
         "content/images-no-alt",
         "content/no-structure",
+        "content/lang-missing",
         "content/answer-first",
         "content/self-contained-paragraphs",
         "content/stale-dates"
       ]
     },
     "technical": {
-      "score": 60,
-      "errors": 2,
-      "warnings": 1,
-      "infos": 2,
+      "score": 100,
+      "errors": 0,
+      "warnings": 0,
+      "infos": 0,
       "rulesRun": [
         "technical/page-unreachable",
         "technical/http-error",
@@ -290,7 +241,12 @@
       ],
       "passed": [
         "technical/page-unreachable",
+        "technical/http-error",
+        "technical/client-rendered",
         "technical/sitemap-missing",
+        "technical/canonical",
+        "technical/title-missing",
+        "technical/meta-description",
         "technical/slow-response",
         "technical/redirect",
         "technical/https",
