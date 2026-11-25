@@ -5,12 +5,12 @@
   },
   "url": "https://openai.com/",
   "finalUrl": "https://openai.com/",
-  "scannedAt": "2026-11-24T15:51:44.426Z",
-  "durationMs": 1514,
+  "scannedAt": "2026-11-25T15:34:51.377Z",
+  "durationMs": 1299,
   "page": {
     "status": 200,
     "contentType": "text/html; charset=utf-8",
-    "timingMs": 261,
+    "timingMs": 224,
     "redirected": false
   },
   "robots": {
@@ -72,10 +72,10 @@
     },
     {
       "severity": "warn",
-      "message": "Thin content — only ~174 words of visible text",
+      "message": "Thin content — only ~172 words of visible text",
       "detail": "Pages with very little extractable text give AI engines nothing to quote; they also correlate with client-rendered shells.",
       "fix": "Expand the page with substantive, answerable content — explanations, specifics, Q&A.",
-      "evidence": "174 words",
+      "evidence": "172 words",
       "ruleId": "content/thin-content"
     },
     {

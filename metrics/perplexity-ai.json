@@ -5,12 +5,12 @@
   },
   "url": "https://www.perplexity.ai/",
   "finalUrl": "https://www.perplexity.ai/",
-  "scannedAt": "2026-11-24T15:51:50.612Z",
-  "durationMs": 422,
+  "scannedAt": "2026-11-25T15:34:58.576Z",
+  "durationMs": 314,
   "page": {
-    "status": 200,
-    "contentType": "text/html; charset=utf-8",
-    "timingMs": 90,
+    "status": 403,
+    "contentType": "text/html; charset=UTF-8",
+    "timingMs": 56,
     "redirected": false
   },
   "robots": {
@@ -24,25 +24,33 @@
   },
   "llmsTxt": {
     "url": "https://www.perplexity.ai/llms.txt",
-    "status": 404,
+    "status": 403,
     "title": null,
     "linkCount": 0
   },
   "findings": [
     {
+      "severity": "error",
+      "message": "Page is marked noindex — AI engines will not index or cite it",
+      "detail": "noindex/none removes the page from search indexes, and answer engines that rely on those indexes will never cite it.",
+      "fix": "Remove the noindex/none directive from the meta tag or X-Robots-Tag header.",
+      "evidence": "<meta name=\"robots\">: noindex,nofollow",
+      "ruleId": "ai-crawler/meta-robots-blocking"
+    },
+    {
       "severity": "warn",
       "message": "No llms.txt found",
-      "detail": "GET https://www.perplexity.ai/llms.txt returned HTTP 404.",
+      "detail": "GET https://www.perplexity.ai/llms.txt returned HTTP 403.",
       "fix": "Create /llms.txt at the site root: an H1 title, a short blockquote summary, and ## sections linking to your key content.",
-      "evidence": "https://www.perplexity.ai/llms.txt → HTTP 404",
+      "evidence": "https://www.perplexity.ai/llms.txt → HTTP 403",
       "ruleId": "llms-txt/missing"
     },
     {
       "severity": "info",
       "message": "No llms-full.txt found",
-      "detail": "GET https://www.perplexity.ai/llms-full.txt returned HTTP 404. The optional full-content companion is absent.",
+      "detail": "GET https://www.perplexity.ai/llms-full.txt returned HTTP 403. The optional full-content companion is absent.",
       "fix": "Consider publishing /llms-full.txt with your key documentation inlined as markdown.",
-      "evidence": "https://www.perplexity.ai/llms-full.txt → HTTP 404",
+      "evidence": "https://www.perplexity.ai/llms-full.txt → HTTP 403",
       "ruleId": "llms-txt/llms-full-missing"
     },
     {
@@ -118,19 +126,41 @@
     },
     {
       "severity": "error",
+      "message": "Page returned HTTP 403",
+      "detail": "Crawlers receive the error response, not your content.",
+      "fix": "Return a 200 with real content; fix the underlying 4xx/5xx or the rules that trigger it.",
+      "evidence": "https://www.perplexity.ai/ → HTTP 403",
+      "ruleId": "technical/http-error"
+    },
+    {
+      "severity": "error",
       "message": "Page appears client-rendered — AI crawlers see an empty shell",
-      "detail": "A JS mount point (id=\"root\"/\"app\"/\"__next\"…) is present but only ~0 words of text shipped in the HTML. Crawlers without a JS engine get almost nothing.",
+      "detail": "Only ~0 words of visible text in the initial HTML — likely rendered client-side.",
       "fix": "Use server-side rendering, static generation or prerendering so the real content is in the first HTML response.",
       "evidence": "0 words of visible text",
       "ruleId": "technical/client-rendered"
+    },
+    {
+      "severity": "info",
+      "message": "No canonical link element",
+      "detail": "Without a canonical, engines pick one themselves — and may consolidate onto the wrong URL.",
+      "fix": "Add <link rel=\"canonical\" href=\"…\"> pointing at the preferred URL for this page.",
+      "ruleId": "technical/canonical"
+    },
+    {
+      "severity": "info",
+      "message": "No meta description",
+      "detail": "A 1–2 sentence description gives answer engines a clean, pre-written summary of the page.",
+      "fix": "Write a meta[name=description] of ~50–160 characters summarizing the page.",
+      "ruleId": "technical/meta-description"
     }
   ],
-  "score": 88,
+  "score": 81,
   "grade": "B",
   "categories": {
     "ai-crawler": {
-      "score": 100,
-      "errors": 0,
+      "score": 85,
+      "errors": 1,
       "warnings": 0,
       "infos": 0,
       "rulesRun": [
@@ -151,7 +181,6 @@
         "ai-crawler/wildcard-block-all",
         "ai-crawler/robots-missing",
         "ai-crawler/robots-unreachable",
-        "ai-crawler/meta-robots-blocking",
         "ai-crawler/crawl-delay",
         "ai-crawler/ai-opt-out-signals",
         "ai-crawler/user-fetch-bypass",
@@ -239,10 +268,10 @@
       ]
     },
     "technical": {
-      "score": 85,
-      "errors": 1,
+      "score": 66,
+      "errors": 2,
       "warnings": 0,
-      "infos": 0,
+      "infos": 2,
       "rulesRun": [
         "technical/page-unreachable",
         "technical/http-error",
@@ -258,11 +287,8 @@
       ],
       "passed": [
         "technical/page-unreachable",
-        "technical/http-error",
         "technical/sitemap-missing",
-        "technical/canonical",
         "technical/title-missing",
-        "technical/meta-description",
         "technical/slow-response",
         "technical/redirect",
         "technical/https",
